@@ -1,0 +1,475 @@
+/* ==========================================================================
+   OPENMONTAGE HYPERFRAMES ANIMATION BLUEPRINTS & HERO CHOREOGRAPHY
+   ========================================================================== */
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.35rem + 1.8vw, 3.55rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: var(--ink-primary);
+  margin: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 1. OpenMontage Rule: vertical-spring-ticker (Slot-Machine de Especialidades) */
+.hf-ticker-slot {
+  display: inline-flex;
+  vertical-align: bottom;
+  height: 1.18em;
+  max-width: 100%;
+  overflow: hidden;
+  background-color: var(--brand-red);
+  color: #FFFFFF;
+  padding-inline: 0.32em;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 20px -6px rgba(212, 25, 36, 0.45);
+}
+
+.hf-ticker-stack {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.hf-ticker-item {
+  height: 1.18em;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+/* 2. OpenMontage Rule: css-marker-patterns (Scribble SVG Underline) */
+.hf-scribble-wrap {
+  position: relative;
+  display: inline-block;
+  font-weight: 800;
+  color: var(--ink-primary);
+}
+
+.hf-scribble-svg {
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 12px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hf-scribble-path {
+  fill: none;
+  stroke: var(--brand-red);
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  stroke-dasharray: 260;
+  stroke-dashoffset: 260;
+  animation: hfDrawScribble 850ms 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes hfDrawScribble {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-lead {
+  font-size: var(--text-lg);
+  color: var(--ink-secondary);
+  max-width: 52ch;
+  line-height: 1.6;
+  margin-top: var(--space-5);
+}
+
+.hero-cta-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* 3. OpenMontage Rule: press-release-spring (Burst Glow Layer) */
+.hf-press-stage {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.hf-burst-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  background: radial-gradient(circle, rgba(212, 25, 36, 0.55) 0%, transparent 70%);
+  filter: blur(16px);
+  opacity: 0;
+  transform: scale(1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hf-press-stage .btn {
+  z-index: 1;
+}
+
+/* Indicadores Rápidos Abaixo do CTA */
+.hero-trust-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-hairline);
+}
+
+.trust-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+}
+
+.trust-pill__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  background-color: var(--brand-red-subtle);
+  color: var(--brand-red);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+/* 4. Palco de Amostra Gráfica de Alto Padrão (Mesa de Estúdio Editorial) */
+.hf-showcase-scene {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-block: 0.5rem;
+}
+
+.specimen-stage {
+  position: relative;
+  width: 100%;
+  max-width: 530px;
+}
+
+.specimen-backdrop {
+  position: absolute;
+  inset: -8px 8px 8px -8px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-mid);
+  border-radius: 1.75rem;
+  transform: rotate(-1.75deg);
+  z-index: 0;
+  opacity: 0.85;
+  box-shadow: var(--shadow-sheet);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .specimen-backdrop {
+    inset: -3px 3px 3px -3px;
+    transform: rotate(-0.8deg);
+  }
+}
+
+.specimen-viewport {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-mid);
+  box-shadow: var(--shadow-sheet);
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .specimen-viewport {
+    border-radius: 1.75rem;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.hf-showcase-card,
+.specimen-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transform: scale(0.98);
+  transition: opacity 350ms cubic-bezier(0.22, 1, 0.36, 1), transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hf-showcase-card.is-active,
+.specimen-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+  z-index: 2;
+}
+
+.hf-showcase-card img,
+.specimen-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hf-showcase-card:hover img,
+.specimen-slide:hover img {
+  transform: scale(1.04);
+}
+
+.specimen-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(14, 16, 20, 0.88) 0%,
+    rgba(14, 16, 20, 0.32) 26%,
+    transparent 52%
+  );
+  pointer-events: none;
+}
+
+/* Enquadramento e centralização óptica dos produtos reais (Instagram 1:1) */
+img[src*="sacolas"] {
+  object-position: 48% 38% !important;
+}
+
+img[src*="frotas"] {
+  object-position: center 72% !important;
+}
+
+img[src*="agendas"] {
+  object-position: 72% 52% !important;
+}
+
+img[src*="terrasco"] {
+  object-position: center 26% !important;
+}
+
+.specimen-badge-row {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  z-index: 5;
+}
+
+.specimen-badge {
+  padding: 0.24rem 0.65rem;
+  border-radius: 999px;
+  background-color: var(--bg-glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-hairline);
+  color: var(--ink-primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.specimen-meta {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.35rem;
+  right: 1.35rem;
+  z-index: 5;
+  color: #FFFFFF;
+}
+
+.specimen-client {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background-color: var(--brand-red);
+  color: #FFFFFF;
+  margin-bottom: 0.35rem;
+}
+
+.specimen-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 0.2rem;
+  color: #FFFFFF;
+}
+
+.specimen-sub {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.specimen-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  z-index: 2;
+  position: relative;
+}
+
+.specimen-pill {
+  padding: 0.45rem 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background-color: var(--bg-elevated);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border-hairline);
+  cursor: pointer;
+  transition: all 160ms ease;
+  user-select: none;
+}
+
+.specimen-pill:hover {
+  color: var(--ink-primary);
+  border-color: var(--ink-primary);
+}
+
+.specimen-pill.is-active,
+.specimen-pill[aria-selected="true"] {
+  background-color: var(--ink-primary);
+  color: var(--bg-elevated);
+  border-color: var(--ink-primary);
+}
+
+/* Faixa Dinâmica Contínua (21st.dev LogoMarquee / InfiniteSlider) */
+.hf-marquee-ribbon {
+  background-color: var(--ink-primary);
+  color: var(--bg-elevated);
+  padding-block: 0.9rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.hf-marquee-mask {
+  max-width: 80rem;
+  margin-inline: auto;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 25%, black 75%, transparent);
+}
+
+/* Loop em CSS puro: não depende do GSAP/CDN.
+   reverse=true do InfiniteSlider: vai de -(metade do conteúdo + gap/2) até 0.
+   A trilha tem 4 cópias da lista, então metade = 2 cópias + seus gaps. */
+.hf-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+  width: max-content;
+  will-change: transform;
+  user-select: none;
+  animation: hf-marquee-scroll 80s linear infinite;
+}
+
+@keyframes hf-marquee-scroll {
+  from {
+    transform: translate3d(calc(-50% - 21px), 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Movimento reduzido: a faixa continua andando, só que mais devagar */
+@media (prefers-reduced-motion: reduce) {
+  .hf-marquee-track {
+    animation-duration: 160s;
+  }
+}
+
+.hf-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hf-marquee-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--brand-red);
+}
+
+/* Cards de Diferenciais */
+.feature-card {
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: var(--shadow-sheet);
+}
+
+.feature-card__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--brand-red-subtle);
+  color: var(--brand-red);
+  border: 1px solid rgba(212, 25, 36, 0.16);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-card__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.feature-card__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin: 0;
+}
+
+.feature-card__desc {
+  font-size: var(--text-sm);
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin: 0;
+}

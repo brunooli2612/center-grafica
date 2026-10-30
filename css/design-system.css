@@ -1,0 +1,270 @@
+:root {
+  color-scheme: light;
+
+  /* Paleta Tátil: Folha de Papel Offset 180g & Tinta de Registro (Light Mode Padrão) */
+  --bg-canvas: #F3EFE6;
+  --bg-surface: #FAF7F0;
+  --bg-elevated: #FFFFFF;
+  --bg-recessed: #E7E1D3;
+  --bg-glass: rgba(243, 239, 230, 0.92);
+
+  /* Tintas de Impressão (Hierarquia Tipográfica) */
+  --ink-primary: #121417;
+  --ink-secondary: #3B4049;
+  --ink-muted: #656B76;
+  --ink-on-accent: #FFFFFF;
+
+  /* Acentos de Produção Gráfica */
+  --brand-red: #D41924;
+  --brand-red-hover: #B3121C;
+  --brand-red-subtle: rgba(212, 25, 36, 0.08);
+  --whatsapp-green: #0D743F;
+  --whatsapp-green-hover: #095930;
+  --whatsapp-subtle: rgba(13, 116, 63, 0.09);
+
+  /* Marcas Técnicas de Calibração CMYK (Uso restrito à barra densitométrica e registro) */
+  --cmyk-c: #009FE3;
+  --cmyk-m: #E6007E;
+  --cmyk-y: #F5D000;
+  --cmyk-k: #121417;
+
+  /* Fios de Faca, Esquadro e Sangria (Exposed Hairline Grid) */
+  --border-hairline: #CFC8B8;
+  --border-mid: #B5AD9B;
+  --border-strong: #121417;
+  --crop-mark-color: rgba(18, 20, 23, 0.42);
+
+  /* Tipografia Autoral (Zero Inter / Plus Jakarta Sans) */
+  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+
+  /* Escala Fluida com Contraste de Grande Formato */
+  --text-xs: clamp(0.72rem, 0.69rem + 0.15vw, 0.78rem);
+  --text-sm: clamp(0.84rem, 0.81rem + 0.18vw, 0.92rem);
+  --text-base: clamp(0.96rem, 0.93rem + 0.2vw, 1.05rem);
+  --text-lg: clamp(1.12rem, 1.05rem + 0.35vw, 1.28rem);
+  --text-xl: clamp(1.35rem, 1.2rem + 0.65vw, 1.7rem);
+  --text-2xl: clamp(1.85rem, 1.5rem + 1.4vw, 2.75rem);
+  --text-3xl: clamp(2.5rem, 1.9rem + 2.8vw, 4.35rem);
+
+  /* Espaçamento Rítmico */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3.25rem;
+  --space-16: 4.5rem;
+  --space-20: 6rem;
+
+  /* Geometria de Corte Reto / Faca Gráfica */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+
+  /* Sombras Físicas de Folha sobre Mesa de Luz (Offset + Soft Blur conforme Craft Floor) */
+  --shadow-sheet: 0 10px 24px -8px rgba(18, 20, 23, 0.12), 0 2px 6px -1px rgba(18, 20, 23, 0.06);
+  --shadow-sheet-hover: 0 16px 32px -10px rgba(18, 20, 23, 0.18), 0 4px 10px -2px rgba(18, 20, 23, 0.08);
+  --shadow-btn: 0 4px 10px -2px rgba(18, 20, 23, 0.16), 0 1px 3px 0 rgba(18, 20, 23, 0.1);
+  --shadow-btn-hover: 0 8px 18px -4px rgba(18, 20, 23, 0.24), 0 2px 5px -1px rgba(18, 20, 23, 0.12);
+  --shadow-ticket: 0 18px 40px -16px rgba(18, 20, 23, 0.16);
+
+  /* Curvas de Movimento (Impeccable & HyperFrames) */
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Chapa de Impressão Anodizada Noturna */
+  --bg-canvas: #0D0F12;
+  --bg-surface: #14171D;
+  --bg-elevated: #1A1E26;
+  --bg-recessed: #08090B;
+  --bg-glass: rgba(13, 15, 18, 0.92);
+
+  --ink-primary: #F3EFE6;
+  --ink-secondary: #B4B9C4;
+  --ink-muted: #7E8594;
+  --ink-on-accent: #FFFFFF;
+
+  --brand-red: #F0323E;
+  --brand-red-hover: #FF4D58;
+  --brand-red-subtle: rgba(240, 50, 62, 0.14);
+  --whatsapp-green: #169C58;
+  --whatsapp-green-hover: #1DB869;
+  --whatsapp-subtle: rgba(22, 156, 88, 0.15);
+
+  --cmyk-k: #F3EFE6;
+
+  --border-hairline: #262B36;
+  --border-mid: #363D4C;
+  --border-strong: #586175;
+  --crop-mark-color: rgba(243, 239, 230, 0.35);
+
+  --shadow-sheet: 0 12px 28px -8px rgba(0, 0, 0, 0.55), 0 3px 8px -2px rgba(0, 0, 0, 0.35);
+  --shadow-sheet-hover: 0 18px 36px -10px rgba(0, 0, 0, 0.72), 0 6px 14px -3px rgba(0, 0, 0, 0.45);
+  --shadow-btn: 0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  --shadow-btn-hover: 0 8px 20px -4px rgba(0, 0, 0, 0.65);
+  --shadow-ticket: 0 22px 48px -16px rgba(0, 0, 0, 0.65);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.58;
+  background-color: var(--bg-canvas);
+  color: var(--ink-primary);
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Textura sutil de fibra e milimetragem de folha gráfica */
+  background-image:
+    radial-gradient(var(--border-hairline) 0.75px, transparent 0.75px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+/* Link de acessibilidade (visualmente oculto até receber foco de teclado) */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background-color: var(--brand-red);
+  color: #FFFFFF;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  box-shadow: var(--shadow-btn);
+  transition: top 180ms ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+::selection {
+  background-color: var(--brand-red);
+  color: #FFFFFF;
+}
+
+/* Scrollbar personalizada no mesmo mundo visual */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-recessed);
+  border-left: 1px solid var(--border-hairline);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink-muted);
+  border: 2px solid var(--bg-recessed);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-red);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  caret-color: var(--brand-red);
+}
+
+/* Tabular Nums para dados técnicos, quantidades, gramaturas e telefones */
+.mono-num,
+input[type="number"],
+.spec-code,
+.sheet-coord,
+.qty-chip,
+.phone-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.editorial-serif {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .specimen-photo-wrap,
+  .specimen-photo-wrap img,
+  .hero-proof-item img,
+  .btn {
+    transform: none !important;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease !important;
+  }
+
+  .ticket-flash {
+    animation: none !important;
+    outline: 2px solid var(--brand-red);
+    outline-offset: 2px;
+  }
+}
