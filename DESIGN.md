@@ -44,6 +44,7 @@ Orientações de design curadas a partir de benchmarks industriais de alto padr�
    - Base de superfície em tom quente editorial (`#FAF9F6` / `Canvas Mist`) no tema claro.
    - Textos e ícones em Carbono/Ink (`#111111` ou `#0F0E12`) para evitar o contraste frio e artificial do preto puro `#000000`.
    - O vermelho Center (`#E31E24`) atua como acento cromático deliberado e exclusivo para CTAs e conversão.
+   - Exceção decidida pelo Bruno (31/10/2026): o botão que envia o orçamento pelo WhatsApp fica verde (`--whatsapp-green`), porque é a cor que o cliente reconhece como WhatsApp. Na seção de orçamento ele é a única ação cheia; o link do resumo é secundário.
 
 2. **Estética de Catálogo Industrial Hairline:**
    - Divisores e bordas estruturais em hairline sutil (`1px solid var(--border-subtle)` / `#E5E5E5`), eliminando sombras pesadas ou gradientes poluídos.
