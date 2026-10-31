@@ -358,9 +358,21 @@
 
           <!-- Coluna Direita: Símbolo Center Gráfica em 3D (DESIGN.md, seção 5, item 4) -->
           <div class="hf-showcase-scene">
-            <div id="logo-3d-stage" class="logo-3d-stage" role="img" aria-label="Símbolo da Center Gráfica em 3D">
-              <!-- Símbolo estático até o 3D renderizar o primeiro quadro -->
-              <img class="logo-3d-placeholder" src="assets/images/simbolo-center.svg" alt="" />
+            <div class="hero-stage-wrap">
+              <div id="logo-3d-stage" class="logo-3d-stage" role="img" aria-label="Símbolo da Center Gráfica em 3D">
+                <!-- Símbolo estático até o 3D renderizar o primeiro quadro -->
+                <img class="logo-3d-placeholder" src="assets/images/simbolo-center.svg" alt="" />
+              </div>
+              <!-- Cards de vidro sobre o 3D (referência Strata). Só fatos já ditos no site. -->
+              <div class="glass-card glass-card--top">
+                <span class="glass-card__label">Produção própria</span>
+                <span class="glass-card__value">Offset · Digital · Comunicação Visual</span>
+              </div>
+              <div class="glass-card glass-card--bottom">
+                <span class="glass-card__label">Balcão em Teresina</span>
+                <span class="glass-card__value">Av. Walter Alencar, 1700</span>
+                <span class="glass-card__meta"><span class="glass-card__dot" aria-hidden="true"></span>Envio para todo o Brasil</span>
+              </div>
             </div>
           </div>
         </div>
@@ -992,5 +1004,6 @@ Aguardo o retorno com valores e prazo de produção. Obrigado!</pre>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     <script src="js/app.bundle.js" defer></script>
     <script type="module" src="js/logo-3d.js"></script>
+    <script src="js/revisao.js" defer></script>
   </body>
 </html>
