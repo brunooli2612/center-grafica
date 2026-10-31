@@ -14,6 +14,77 @@
   overflow-wrap: break-word;
 }
 
+/* Entrada do título: cada linha sobe da própria máscara, 0.12s entre linhas (referência Strata AI) */
+.hero-line {
+  display: block;
+  --line-delay: calc(0.1s + var(--line, 0) * 0.12s);
+}
+
+.hero-line__inner {
+  display: block;
+}
+
+/* Evita palavra sozinha na linha no celular ("Sua marca impressa / em") */
+.hero-line__inner--balance {
+  text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-line {
+    animation: heroLineMask 0.9s linear both;
+    animation-delay: var(--line-delay);
+  }
+
+  .hero-line__inner {
+    animation: heroLineRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--line-delay);
+  }
+
+  /* Depois do título: subtítulo, botões e selos assentam em sequência */
+  .hero-content .section-eyebrow,
+  .hero-lead,
+  .hero-cta-group,
+  .hero-trust-pills {
+    animation: heroSettle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-content .section-eyebrow { animation-delay: 0s; }
+  .hero-lead { animation-delay: 0.62s; }
+  .hero-cta-group { animation-delay: 0.74s; }
+  .hero-trust-pills { animation-delay: 0.86s; }
+}
+
+/* A máscara só existe durante a subida; no fim sai, para não cortar a sombra do ticker nem o rabisco */
+@keyframes heroLineMask {
+  0%,
+  99% {
+    clip-path: inset(-0.4em -100vw 0 -100vw);
+  }
+  100% {
+    clip-path: none;
+  }
+}
+
+@keyframes heroLineRise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes heroSettle {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* 1. OpenMontage Rule: vertical-spring-ticker (Slot-Machine de Especialidades) */
 /* Coluna de texto da hero pode encolher abaixo do conteúdo (grid item) */
 .hero-content {
@@ -76,7 +147,8 @@
   stroke-linecap: round;
   stroke-dasharray: 260;
   stroke-dashoffset: 260;
-  animation: hfDrawScribble 850ms 400ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  /* Desenha depois que a última linha do título chega (both: segura o traço escondido durante o atraso) */
+  animation: hfDrawScribble 850ms 1000ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @keyframes hfDrawScribble {
@@ -436,6 +508,11 @@ img[src*="terrasco"] {
 @media (prefers-reduced-motion: reduce) {
   .hf-marquee-track {
     animation-duration: 160s;
+  }
+
+  .hf-scribble-path {
+    animation: none;
+    stroke-dashoffset: 0;
   }
 }
 

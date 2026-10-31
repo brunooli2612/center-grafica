@@ -11,10 +11,10 @@
 
 /* Barra Superior de Localização e Envio Nacional */
 .top-info-bar {
-  background-color: var(--bg-recessed);
-  border-bottom: 1px solid var(--border-hairline);
+  /* Mesma cor da hero, sem borda: não forma uma faixa separada */
+  background-color: var(--bg-surface);
   font-size: var(--text-xs);
-  color: var(--ink-secondary);
+  color: var(--ink-muted);
 }
 
 .top-info-bar__inner {
@@ -91,6 +91,15 @@
   border-bottom: 1px solid var(--border-hairline);
 }
 
+/* Menu sem barra no topo (referência Strata AI): mesma cor da hero e sem borda,
+   então emenda com ela. Obs.: o sticky acima não prende hoje porque o body tem overflow-x: hidden. */
+.site-header {
+  background-color: var(--bg-surface);
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .site-header__inner {
   display: flex;
   align-items: center;
@@ -106,20 +115,17 @@
   text-decoration: none;
 }
 
+/* Símbolo da marca (assets/images/simbolo-center.svg): já tem forma própria, sem moldura */
 .brand-logo__mark {
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-mid);
-  background-color: var(--bg-elevated);
-  overflow: hidden;
   flex-shrink: 0;
 }
 
 .brand-logo__mark img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .brand-logo__text {
@@ -141,6 +147,7 @@
 }
 
 .brand-logo__tagline {
+  white-space: nowrap;
   font-size: 0.75rem;
   color: var(--ink-muted);
 }
@@ -201,15 +208,64 @@
 
 .nav-link {
   font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--ink-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--ink-muted);
   text-decoration: none;
   padding-block: 0.35rem;
   transition: color 150ms var(--ease-out-quart);
 }
 
-.nav-link:hover {
-  color: var(--brand-red);
+/* No hover o texto só "acende", sem caixa */
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--ink-primary);
+}
+
+@media (min-width: 1240px) {
+  .primary-nav {
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .primary-nav {
+    gap: 1.75rem;
+  }
+}
+
+/* Abaixo de 1440px o cabeçalho não comporta tudo: some o slogan e o número
+   (que continua na faixa de cima), o botão fica só "WhatsApp" */
+@media (max-width: 1439.98px) {
+  .site-header .brand-logo__tagline,
+  .site-header .wa-number {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Seletor de tema sem moldura, para não parecer uma segunda barra */
+  .site-header .theme-switcher--desktop {
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
+
+/* Único elemento com contorno no menu: o botão de WhatsApp */
+@media (min-width: 768px) {
+  .site-header .header-wa-btn {
+    background-color: transparent;
+    color: var(--ink-primary);
+    border: 1px solid var(--border-mid);
+    box-shadow: none;
+  }
+
+  .site-header .header-wa-btn:hover,
+  .site-header .header-wa-btn:focus-visible {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+    color: #FFFFFF;
+  }
 }
 
 .header-actions {
@@ -227,7 +283,7 @@
 }
 
 @media (max-width: 767px) {
-  .theme-switcher--desktop {
+  .site-header .theme-switcher--desktop {
     display: none !important;
   }
   .wa-text-desktop {
@@ -236,7 +292,7 @@
   .wa-text-mobile {
     display: inline !important;
   }
-  .header-wa-btn {
+  .site-header .header-wa-btn {
     padding: 0.45rem 0.85rem !important;
     font-size: 0.82rem !important;
   }
@@ -248,7 +304,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1240px) {
   .primary-nav__mobile-actions {
     display: none;
   }
@@ -267,7 +323,7 @@
   cursor: pointer;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1240px) {
   .primary-nav {
     display: flex;
   }

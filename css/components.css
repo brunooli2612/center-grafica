@@ -57,6 +57,13 @@
   box-shadow: var(--shadow-btn);
 }
 
+/* Ícone do WhatsApp dentro dos botões (herda a cor do texto) */
+.wa-icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+}
+
 .btn-whatsapp:hover {
   background-color: var(--whatsapp-green-hover);
   transform: translateY(-2px);

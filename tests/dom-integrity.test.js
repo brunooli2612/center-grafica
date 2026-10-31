@@ -118,7 +118,8 @@ test('All referenced CSS, JS, and extracted real Instagram portfolio assets exis
     'assets/images/portfolio-frotas.png',
     'assets/images/portfolio-agendas.png',
     'assets/images/portfolio-terrasco.png',
-    'assets/images/logo-center.svg'
+    'assets/images/logo-center.svg',
+    'assets/images/simbolo-center.svg'
   ];
 
   for (const relPath of requiredFiles) {
