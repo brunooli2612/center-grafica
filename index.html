@@ -168,8 +168,10 @@
                 aria-checked="true"
                 data-theme-option="light"
                 title="Tema Claro"
+                aria-label="Tema Claro"
               >
-                Claro
+                <svg class="theme-btn__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                <span class="theme-btn__label">Claro</span>
               </button>
               <button
                 type="button"
@@ -178,8 +180,10 @@
                 aria-checked="false"
                 data-theme-option="dark"
                 title="Tema Escuro"
+                aria-label="Tema Escuro"
               >
-                Escuro
+                <svg class="theme-btn__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                <span class="theme-btn__label">Escuro</span>
               </button>
               <button
                 type="button"
@@ -188,8 +192,10 @@
                 aria-checked="false"
                 data-theme-option="system"
                 title="Tema do Sistema"
+                aria-label="Tema do Sistema"
               >
-                Auto
+                <svg class="theme-btn__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                <span class="theme-btn__label">Auto</span>
               </button>
             </div>
 
@@ -215,8 +221,10 @@
               aria-checked="true"
               data-theme-option="light"
               title="Tema Claro"
+              aria-label="Tema Claro"
             >
-              Claro
+              <svg class="theme-btn__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+              <span class="theme-btn__label">Claro</span>
             </button>
             <button
               type="button"
@@ -225,8 +233,10 @@
               aria-checked="false"
               data-theme-option="dark"
               title="Tema Escuro"
+              aria-label="Tema Escuro"
             >
-              Escuro
+              <svg class="theme-btn__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+              <span class="theme-btn__label">Escuro</span>
             </button>
             <button
               type="button"
@@ -235,8 +245,10 @@
               aria-checked="false"
               data-theme-option="system"
               title="Tema do Sistema"
+              aria-label="Tema do Sistema"
             >
-              Auto
+              <svg class="theme-btn__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              <span class="theme-btn__label">Auto</span>
             </button>
           </div>
 
@@ -283,7 +295,7 @@
               <!-- Cada linha sobe da própria máscara na entrada (referência Strata AI) -->
               <span class="hero-line" style="--line: 0"><span class="hero-line__inner hero-line__inner--balance">Sua marca impressa em</span></span>
               <!-- OpenMontage Rule: vertical-spring-ticker -->
-              <span class="hero-line" style="--line: 1"><span class="hero-line__inner"><span class="hf-ticker-slot" aria-live="polite">
+              <span class="hero-line" style="--line: 1"><span class="hero-line__inner"><span class="sr-only">sacolas, frotas, agendas, embalagens e impressão offset e digital</span><span class="hf-ticker-slot" aria-hidden="true">
                 <span class="hf-ticker-stack" id="hf-ticker-stack">
                   <span class="hf-ticker-item">Sacolas Personalizadas</span>
                   <span class="hf-ticker-item">Envelopamento de Frotas</span>
@@ -346,7 +358,10 @@
 
           <!-- Coluna Direita: Símbolo Center Gráfica em 3D (DESIGN.md, seção 5, item 4) -->
           <div class="hf-showcase-scene">
-            <div id="logo-3d-stage" class="logo-3d-stage" role="img" aria-label="Símbolo da Center Gráfica em 3D"></div>
+            <div id="logo-3d-stage" class="logo-3d-stage" role="img" aria-label="Símbolo da Center Gráfica em 3D">
+              <!-- Símbolo estático até o 3D renderizar o primeiro quadro -->
+              <img class="logo-3d-placeholder" src="assets/images/simbolo-center.svg" alt="" />
+            </div>
           </div>
         </div>
       </section>
@@ -405,109 +420,85 @@
               </div>
 
               <div class="vtabs-list" role="tablist" aria-label="Especialidades e Trabalhos Reais da Center Gráfica">
-                <button
-                  type="button"
-                  class="vtabs-item is-active"
-                  role="tab"
-                  aria-selected="true"
-                  data-vtab-index="0"
-                >
+                <div class="vtabs-item is-active" data-vtab-index="0">
                   <div class="vtabs-rail" aria-hidden="true">
                     <div class="vtabs-progress" data-vtab-progress="0"></div>
                   </div>
                   <span class="vtabs-num">/01</span>
                   <div class="vtabs-body">
-                    <span class="vtabs-title">Sacolas &amp; Embalagens Offset</span>
+                    <button type="button" class="vtabs-title" role="tab" aria-selected="true">Sacolas &amp; Embalagens Offset</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
                           Sacolas estruturadas em papel Offset 240g, Duplex ou Kraft com reforço de fundo, ilhós metálico, alça cordão e laminação fosca ou brilho.
                         </p>
-                        <span class="vtabs-cta-link" data-select-product="sacola-personalizada">
+                        <button type="button" class="vtabs-cta-link" data-select-product="sacola-personalizada">
                           Orçar esta linha →
-                        </span>
+                        </button>
                       </div>
                     </div>
                   </div>
-                </button>
+                </div>
 
-                <button
-                  type="button"
-                  class="vtabs-item"
-                  role="tab"
-                  aria-selected="false"
-                  data-vtab-index="1"
-                >
+                <div class="vtabs-item" data-vtab-index="1">
                   <div class="vtabs-rail" aria-hidden="true">
                     <div class="vtabs-progress" data-vtab-progress="1"></div>
                   </div>
                   <span class="vtabs-num">/02</span>
                   <div class="vtabs-body">
-                    <span class="vtabs-title">Adesivagem de Frotas &amp; Lonas</span>
+                    <button type="button" class="vtabs-title" role="tab" aria-selected="false">Adesivagem de Frotas &amp; Lonas</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
                           Personalização parcial ou total de picapes, utilitários e carros comerciais em vinil automotivo de alta performance com proteção solar UV.
                         </p>
-                        <span class="vtabs-cta-link" data-select-product="personalizacao-frotas">
+                        <button type="button" class="vtabs-cta-link" data-select-product="personalizacao-frotas">
                           Orçar esta linha →
-                        </span>
+                        </button>
                       </div>
                     </div>
                   </div>
-                </button>
+                </div>
 
-                <button
-                  type="button"
-                  class="vtabs-item"
-                  role="tab"
-                  aria-selected="false"
-                  data-vtab-index="2"
-                >
+                <div class="vtabs-item" data-vtab-index="2">
                   <div class="vtabs-rail" aria-hidden="true">
                     <div class="vtabs-progress" data-vtab-progress="2"></div>
                   </div>
                   <span class="vtabs-num">/03</span>
                   <div class="vtabs-body">
-                    <span class="vtabs-title">Cadernos &amp; Agendas Corporativas</span>
+                    <button type="button" class="vtabs-title" role="tab" aria-selected="false">Cadernos &amp; Agendas Corporativas</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
                           Agendas e cadernos capa dura empastada com encadernação Wire-o metálico, miolo personalizado, cartela de adesivos e bolso interno.
                         </p>
-                        <span class="vtabs-cta-link" data-select-product="cadernos-agendas-corporativas">
+                        <button type="button" class="vtabs-cta-link" data-select-product="cadernos-agendas-corporativas">
                           Orçar esta linha →
-                        </span>
+                        </button>
                       </div>
                     </div>
                   </div>
-                </button>
+                </div>
 
-                <button
-                  type="button"
-                  class="vtabs-item"
-                  role="tab"
-                  aria-selected="false"
-                  data-vtab-index="3"
-                >
+                <div class="vtabs-item" data-vtab-index="3">
                   <div class="vtabs-rail" aria-hidden="true">
                     <div class="vtabs-progress" data-vtab-progress="3"></div>
                   </div>
                   <span class="vtabs-num">/04</span>
                   <div class="vtabs-body">
-                    <span class="vtabs-title">Acabamentos Especiais &amp; Verniz UV</span>
+                    <button type="button" class="vtabs-title" role="tab" aria-selected="false">Acabamentos Especiais &amp; Verniz UV</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
                           Projetos exclusivos com verniz UV localizado em alto relevo, laminação soft-touch e hot stamping para destacar a identidade da sua marca.
                         </p>
-                        <span class="vtabs-cta-link" data-select-product="cadernos-agendas-corporativas">
+                        <button type="button" class="vtabs-cta-link" data-select-product="cadernos-agendas-corporativas">
                           Orçar esta linha →
-                        </span>
+                        </button>
                       </div>
                     </div>
                   </div>
-                </button>
+                </div>
               </div>
             </div>
 
@@ -772,18 +763,19 @@
                   </div>
 
                   <div class="form-field" id="city-state-wrapper" hidden>
-                    <label for="quote-city-input">Qual a sua Cidade e Estado (UF)?</label>
+                    <label for="quote-city-input">Qual a sua Cidade e Estado (UF)? <span class="field-required" aria-hidden="true">*</span></label>
                     <input
                       type="text"
                       id="quote-city-input"
                       class="form-input"
+                      aria-required="true"
                       placeholder="Ex.: Fortaleza - CE"
                     />
                   </div>
 
                   <div class="form-row-2">
                     <div class="form-field">
-                      <label for="quote-customer-input">Seu nome ou empresa</label>
+                      <label for="quote-customer-input">Seu nome ou empresa <span class="field-required" aria-hidden="true">*</span></label>
                       <input
                         type="text"
                         id="quote-customer-input"
@@ -847,7 +839,7 @@ Aguardo o retorno com valores e prazo de produção. Obrigado!</pre>
                     href="https://wa.me/5586988545141"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="btn btn-primary"
+                    class="btn btn-secondary"
                   >
                     <svg class="wa-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                     Abrir direto no WhatsApp

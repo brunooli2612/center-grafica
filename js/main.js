@@ -50,8 +50,14 @@ function initThemeSwitcher() {
   const buttons = Array.from(document.querySelectorAll('[data-theme-option]'));
   const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'light';
 
+  // "Auto" segue o claro/escuro do sistema operacional
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  let currentMode = savedTheme;
+
   function applyTheme(mode) {
-    htmlEl.setAttribute('data-theme', mode);
+    currentMode = mode;
+    const resolved = mode === 'system' ? (systemDark.matches ? 'dark' : 'light') : mode;
+    htmlEl.setAttribute('data-theme', resolved);
     localStorage.setItem(THEME_STORAGE_KEY, mode);
     buttons.forEach((btn) => {
       const isSelected = btn.getAttribute('data-theme-option') === mode;
@@ -60,6 +66,10 @@ function initThemeSwitcher() {
   }
 
   applyTheme(savedTheme);
+
+  systemDark.addEventListener('change', () => {
+    if (currentMode === 'system') applyTheme('system');
+  });
 
   buttons.forEach((btn, index) => {
     btn.addEventListener('click', () => {
@@ -560,6 +570,7 @@ function bindEvents() {
           feedbackEl.hidden = false;
           feedbackEl.className = 'form-feedback is-error';
           feedbackEl.textContent = validation.errors.join(' ');
+          feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         return;
       }
@@ -575,6 +586,23 @@ function bindEvents() {
       window.open(url, '_blank', 'noopener,noreferrer');
     });
   }
+
+  // O link do resumo passa pela mesma validação do formulário
+
+  const directLink = document.getElementById('whatsapp-direct-preview-link');
+
+  if (directLink && quoteForm) {
+
+    directLink.addEventListener('click', (event) => {
+
+      event.preventDefault();
+
+      quoteForm.requestSubmit();
+
+    });
+
+  }
+
 
   const copyBtn = document.getElementById('copy-quote-btn');
   if (copyBtn) {
@@ -664,22 +692,10 @@ function initVerticalSpringTicker() {
   function advance() {
     if (isCycling) return;
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Movimento reduzido: o ticker fica parado no primeiro item
+    if (isReduced) return;
     const slotHeight = items[0].getBoundingClientRect().height || 54;
     currentIndex++;
-
-    if (isReduced) {
-      tickerStack.style.transition = 'opacity 250ms ease';
-      tickerStack.style.opacity = '0';
-      setTimeout(() => {
-        tickerStack.style.transform = `translateY(-${currentIndex * slotHeight}px)`;
-        tickerStack.style.opacity = '1';
-        if (currentIndex >= stepCount) {
-          currentIndex = 0;
-          tickerStack.style.transform = 'translateY(0px)';
-        }
-      }, 260);
-      return;
-    }
 
     // Curva física OpenMontage: back.out(1.7) overshoot com cubic-bezier
     tickerStack.style.transition = 'transform 550ms cubic-bezier(0.34, 1.56, 0.64, 1)';
@@ -855,7 +871,8 @@ function initVerticalTabs() {
     tabs.forEach((tab, idx) => {
       const isSelected = idx === activeIndex;
       tab.classList.toggle('is-active', isSelected);
-      tab.setAttribute('aria-selected', String(isSelected));
+      const tabButton = tab.querySelector('[role=\"tab\"]');
+      if (tabButton) tabButton.setAttribute('aria-selected', String(isSelected));
     });
 
     const prevSlide = slides[prevIndex];
@@ -953,7 +970,7 @@ function initVerticalTabs() {
  * Faixa de especialidades (21st.dev LogoMarquee: duration=80, durationOnHover=25).
  * O loop é CSS puro; aqui só muda a velocidade no hover via Web Animations API,
  * com rampa suave em vez de salto. Não depende do GSAP nem é bloqueado por
- * prefers-reduced-motion (o CSS já desacelera a faixa nesse caso).
+ * prefers-reduced-motion (o CSS para a faixa nesse caso).
  */
 function initMarqueeHoverSpeed() {
   const track = document.getElementById('hf-marquee-track');

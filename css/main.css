@@ -252,8 +252,11 @@
   aspect-ratio: 1 / 1;
 }
 
+/* Canvas e símbolo estático ocupam o mesmo quadrado enquanto o 3D carrega */
 .logo-3d-stage canvas,
 .logo-3d-stage img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -262,6 +265,14 @@
 @media (max-width: 1023px) {
   .logo-3d-stage {
     max-width: 440px;
+  }
+}
+
+/* Celular: palco menor para não abrir um buraco abaixo dos CTAs */
+@media (max-width: 767px) {
+  .logo-3d-stage {
+    max-width: 280px;
+    margin-inline: auto;
   }
 }
 
@@ -504,10 +515,10 @@ img[src*="terrasco"] {
   }
 }
 
-/* Movimento reduzido: a faixa continua andando, só que mais devagar */
+/* Movimento reduzido: a faixa fica parada */
 @media (prefers-reduced-motion: reduce) {
   .hf-marquee-track {
-    animation-duration: 160s;
+    animation: none;
   }
 
   .hf-scribble-path {

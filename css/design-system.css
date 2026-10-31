@@ -35,10 +35,10 @@
   --crop-mark-color: rgba(18, 20, 23, 0.42);
 
   /* Tipografia Autoral (Zero Inter / Plus Jakarta Sans) */
-  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
   --font-editorial: 'Instrument Serif', Georgia, serif;
-  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
 
   /* Escala Fluida com Contraste de Grande Formato */
   --text-xs: clamp(0.72rem, 0.69rem + 0.15vw, 0.78rem);
@@ -230,6 +230,11 @@ input[type="number"],
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0;
+}
+
+/* hidden sempre vence o display dos componentes (ex.: campo Cidade/UF) */
+[hidden] {
+  display: none !important;
 }
 
 :focus-visible {

@@ -96,6 +96,10 @@
   transition: background-color 140ms ease, color 140ms ease;
 }
 
+.theme-btn__icon {
+  flex-shrink: 0;
+}
+
 .theme-btn[aria-checked="true"] {
   background-color: var(--bg-elevated);
   color: var(--ink-primary);
@@ -253,6 +257,15 @@
 }
 
 .vtabs-title {
+  /* É o botão da aba: zera o estilo nativo */
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
   font-family: var(--font-display);
   font-size: clamp(1.3rem, 1.9vw, 1.85rem);
   font-weight: 600;
@@ -265,15 +278,20 @@
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
+  /* Fechado: some também do Tab do teclado */
+  visibility: hidden;
   transition:
     grid-template-rows 320ms cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 260ms ease;
+    opacity 260ms ease,
+    visibility 0s linear 320ms;
   overflow: hidden;
 }
 
 .vtabs-item.is-active .vtabs-expand {
   grid-template-rows: 1fr;
   opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .vtabs-expand-inner {
@@ -296,7 +314,11 @@
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--brand-red);
-  padding: 0.2rem 0;
+  min-height: 40px;
+  padding: 0.5rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .vtabs-cta-link:hover {
@@ -817,6 +839,10 @@
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--ink-primary);
+}
+
+.field-required {
+  color: var(--brand-red);
 }
 
 .label-optional {

@@ -251,6 +251,7 @@ function initLogo3D(container) {
   resize();
 
   const clock = new THREE.Clock();
+  let placeholder = container.querySelector('.logo-3d-placeholder');
 
   function render() {
     if (reducedMotion.matches) {
@@ -272,6 +273,12 @@ function initLogo3D(container) {
     }
 
     renderer.render(scene, camera);
+
+    // Primeiro quadro pronto: tira o símbolo estático do HTML
+    if (placeholder) {
+      placeholder.remove();
+      placeholder = null;
+    }
   }
 
   // Pausa o loop quando o palco sai da tela

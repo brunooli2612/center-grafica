@@ -251,6 +251,15 @@
   }
 }
 
+/* Desktop: só os ícones (sol, lua, monitor); o nome fica no title/aria-label */
+.site-header .theme-switcher--desktop .theme-btn {
+  padding: 0.45rem;
+}
+
+.site-header .theme-switcher--desktop .theme-btn__label {
+  display: none;
+}
+
 /* Único elemento com contorno no menu: o botão de WhatsApp */
 @media (min-width: 768px) {
   .site-header .header-wa-btn {
