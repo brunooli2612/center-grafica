@@ -15,9 +15,16 @@
 }
 
 /* 1. OpenMontage Rule: vertical-spring-ticker (Slot-Machine de Especialidades) */
+/* Coluna de texto da hero pode encolher abaixo do conteúdo (grid item) */
+.hero-content {
+  min-width: 0;
+}
+
 .hf-ticker-slot {
   display: inline-flex;
   vertical-align: bottom;
+  /* No celular, reduz a fonte para o item mais longo ("Envelopamento de Frotas", ~14.3em com padding) caber na tela */
+  font-size: min(1em, calc((100vw - 2rem) / 14.6));
   height: 1.18em;
   max-width: 100%;
   overflow: hidden;

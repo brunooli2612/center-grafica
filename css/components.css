@@ -765,7 +765,8 @@
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0, 1fr): a coluna não cresce além do card por causa de conteúdo sem quebra */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   min-width: 0;
   max-width: 100%;
@@ -773,9 +774,15 @@
   box-sizing: border-box;
 }
 
+/* Botões do formulário quebram linha em vez de estourar o card no celular */
+.form-grid .btn {
+  white-space: normal;
+  text-align: center;
+}
+
 .form-row-2 {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   min-width: 0;
   max-width: 100%;
@@ -785,7 +792,7 @@
 
 @media (min-width: 680px) {
   .form-row-2 {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
