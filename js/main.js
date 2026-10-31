@@ -283,6 +283,12 @@ function updateProductDependentFields(productId, preserveQuantity = false) {
     }
 
     if (presetsContainer) {
+      // Marca as tiragens que já entram em Offset (melhor custo unitário),
+      // só quando a linha mistura Digital e Offset
+      const isOffset = (qty) => /Offset Industrial/.test(recommendPrintProcess(product.id, qty).process);
+      const offsetCount = product.suggestedQuantities.filter(isOffset).length;
+      const markOffset = offsetCount > 0 && offsetCount < product.suggestedQuantities.length;
+
       presetsContainer.innerHTML = product.suggestedQuantities
         .map(
           (qty) => `
@@ -292,7 +298,7 @@ function updateProductDependentFields(productId, preserveQuantity = false) {
             data-preset-qty="${qty}"
             aria-pressed="${Number(state.quantity) === qty}"
           >
-            ${qty} un.
+            ${qty} un.${markOffset && isOffset(qty) ? ' <span class="qty-chip__tag">Offset</span>' : ''}
           </button>
         `
         )
@@ -538,6 +544,11 @@ function bindEvents() {
           feedbackEl.className = 'form-feedback is-error';
           feedbackEl.textContent = validation.errors.join(' ');
           feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Leva o cursor ao primeiro campo obrigatório vazio
+          const emptyField = [...quoteForm.querySelectorAll('[required], [aria-required="true"]')].find(
+            (field) => !field.value.trim() && field.offsetParent !== null
+          );
+          if (emptyField) emptyField.focus({ preventScroll: true });
         }
         return;
       }
