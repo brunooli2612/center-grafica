@@ -40,11 +40,6 @@
     justify-content: center;
     font-size: 0.72rem;
   }
-  .top-info-bar__contacts {
-    justify-content: center;
-    gap: 0.65rem;
-    font-size: 0.72rem;
-  }
 }
 
 .top-info-bar__item {
@@ -80,6 +75,13 @@
   color: var(--brand-red);
 }
 
+/* Celular: só a linha de envio nacional; endereço e telefones já estão na página */
+@media (max-width: 767px) {
+  .top-info-bar__contacts {
+    display: none;
+  }
+}
+
 /* Cabeçalho Principal */
 .site-header {
   position: sticky;
@@ -92,7 +94,7 @@
 }
 
 /* Menu sem barra no topo (referência Strata AI): mesma cor da hero e sem borda,
-   então emenda com ela. Obs.: o sticky acima não prende hoje porque o body tem overflow-x: hidden. */
+   então emenda com ela. */
 .site-header {
   background-color: var(--bg-surface);
   border-bottom-color: transparent;
@@ -234,10 +236,16 @@
   }
 }
 
-/* Abaixo de 1440px o cabeçalho não comporta tudo: some o slogan e o número
-   (que continua na faixa de cima), o botão fica só "WhatsApp" */
+/* Abaixo de 1440px o cabeçalho não comporta tudo: some o slogan */
 @media (max-width: 1439.98px) {
-  .site-header .brand-logo__tagline,
+  .site-header .brand-logo__tagline {
+    display: none;
+  }
+}
+
+/* Abaixo de 1280px some também o número (que continua na faixa de cima),
+   o botão fica só "WhatsApp" */
+@media (max-width: 1279.98px) {
   .site-header .wa-number {
     display: none;
   }
@@ -260,21 +268,20 @@
   display: none;
 }
 
-/* Único elemento com contorno no menu: o botão de WhatsApp */
-@media (min-width: 768px) {
-  .site-header .header-wa-btn {
-    background-color: transparent;
-    color: var(--ink-primary);
-    border: 1px solid var(--border-mid);
-    box-shadow: none;
-  }
+/* Único elemento com contorno no menu: o botão de WhatsApp.
+   Vermelho cheio fica só para o CTA da hero, inclusive no celular */
+.site-header .header-wa-btn {
+  background-color: transparent;
+  color: var(--ink-primary);
+  border: 1px solid var(--border-mid);
+  box-shadow: none;
+}
 
-  .site-header .header-wa-btn:hover,
-  .site-header .header-wa-btn:focus-visible {
-    background-color: var(--brand-red);
-    border-color: var(--brand-red);
-    color: #FFFFFF;
-  }
+.site-header .header-wa-btn:hover,
+.site-header .header-wa-btn:focus-visible {
+  background-color: var(--brand-red);
+  border-color: var(--brand-red);
+  color: #FFFFFF;
 }
 
 .header-actions {
@@ -461,6 +468,12 @@
 @media (min-width: 1024px) {
   .quote-workspace {
     grid-template-columns: 1.18fr 0.82fr;
+  }
+
+  /* Resumo acompanha o formulário enquanto ele cresce */
+  .quote-workspace > :last-child {
+    position: sticky;
+    top: 6rem;
   }
 }
 

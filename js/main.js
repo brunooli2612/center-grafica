@@ -1,6 +1,5 @@
 import {
   CATALOG_PRODUCTS,
-  PORTFOLIO_ITEMS,
   PREPRESS_CHECKLIST_ITEMS,
   PRODUCT_CATEGORIES
 } from './catalog-data.js';
@@ -109,46 +108,6 @@ function initMobileMenu() {
       navMenu.classList.remove('is-open');
     });
   });
-}
-
-function renderPortfolio() {
-  const grid = document.getElementById('portfolio-grid');
-  if (!grid) return;
-
-  grid.innerHTML = PORTFOLIO_ITEMS.map(
-    (item) => `
-    <article class="portfolio-card" data-tilt-card>
-      <div class="portfolio-card__media">
-        <img
-          src="${item.image}"
-          alt="${item.title} — ${item.client}"
-          loading="lazy"
-          width="640"
-          height="480"
-        />
-        <span class="portfolio-card__tag">${item.category}</span>
-      </div>
-      <div class="portfolio-card__body">
-        <span class="portfolio-card__client">Cliente: ${item.client}</span>
-        <h3 class="portfolio-card__title">${item.title}</h3>
-        <p class="portfolio-card__desc">${item.description}</p>
-        <div class="portfolio-card__footer">
-          <span class="portfolio-card__substrate">${item.substrate}</span>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-select-product="${item.productRef}"
-            aria-label="Orçar projeto similar a ${item.title}"
-          >
-            Quero um igual
-          </button>
-        </div>
-      </div>
-    </article>
-  `
-  ).join('');
-
-  initTiltCards();
 }
 
 function initTiltCards() {
@@ -474,6 +433,14 @@ function bindEvents() {
       const prodId = selectBtn.getAttribute('data-select-product');
       triggerPressSpring(selectBtn);
       selectProductAndScroll(prodId, true);
+      // Atalhos que já chegam com um acabamento escolhido (ex.: aba /04)
+      const finish = selectBtn.getAttribute('data-select-finish');
+      const finishSelect = document.getElementById('quote-finish-select');
+      if (finish && finishSelect && [...finishSelect.options].some((o) => o.value === finish)) {
+        state.finish = finish;
+        finishSelect.value = finish;
+        syncQuoteUI();
+      }
     }
   });
 
@@ -759,15 +726,6 @@ function initOpenMontageMotion() {
     });
   }
 
-  // Mesa Gráfica Hero: entrada com profundidade e perspectiva editorial
-  const specimenStage = document.getElementById('hero-specimen-stage');
-  if (specimenStage) {
-    gsap.fromTo(
-      specimenStage,
-      { y: 26, opacity: 0, rotateY: 4 },
-      { y: 0, opacity: 1, rotateY: 0, duration: 0.75, delay: 0.2, ease: 'power2.out' }
-    );
-  }
 
   // 5. Faixa de especialidades: loop em CSS (@keyframes hf-marquee-scroll).
   //    A velocidade no hover é controlada por initMarqueeHoverSpeed(), fora deste bloco.
@@ -1003,77 +961,9 @@ function initMarqueeHoverSpeed() {
   track.addEventListener('mouseleave', () => rampTo(1));
 }
 
-/**
- * Mesa de Amostras Gráfica no Hero (Decisão UX/UI):
- * Substitui os 4 mini-cards fragmentados por um palco de lâmina única,
- * com transição suave, seletor tátil e pausa no hover.
- */
-function initHeroSpecimenStage() {
-  const stage = document.getElementById('hero-specimen-stage');
-  if (!stage) return;
-
-  const slides = Array.from(stage.querySelectorAll('.hf-showcase-card, .specimen-slide'));
-  const pills = Array.from(stage.querySelectorAll('.specimen-pill'));
-  if (slides.length === 0) return;
-
-  let currentIndex = 0;
-  let isPaused = false;
-  let timer = null;
-
-  function goToSpecimen(index) {
-    currentIndex = (index + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('is-active', i === currentIndex);
-    });
-    pills.forEach((pill, i) => {
-      const active = i === currentIndex;
-      pill.classList.toggle('is-active', active);
-      pill.setAttribute('aria-selected', String(active));
-    });
-  }
-
-  function startCycle() {
-    stopCycle();
-    if (isPaused) return;
-    timer = setInterval(() => {
-      if (!isPaused) {
-        goToSpecimen(currentIndex + 1);
-      }
-    }, 4500);
-  }
-
-  function stopCycle() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-  }
-
-  pills.forEach((pill, i) => {
-    pill.addEventListener('click', () => {
-      goToSpecimen(i);
-      startCycle();
-    });
-  });
-
-  stage.addEventListener('mouseenter', () => {
-    isPaused = true;
-    stopCycle();
-  });
-
-  stage.addEventListener('mouseleave', () => {
-    isPaused = false;
-    startCycle();
-  });
-
-  startCycle();
-}
-
 function initApp() {
   initThemeSwitcher();
   initMobileMenu();
-  initHeroSpecimenStage();
-  renderPortfolio();
   initVerticalTabs();
   initMarqueeHoverSpeed();
   renderCategoryPills();

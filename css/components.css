@@ -245,8 +245,12 @@
   font-weight: 600;
   margin-top: 0.35rem;
   font-variant-numeric: tabular-nums;
-  opacity: 0.55;
+  color: var(--ink-muted);
   flex-shrink: 0;
+}
+
+.vtabs-item.is-active .vtabs-num {
+  color: var(--brand-red);
 }
 
 .vtabs-body {
@@ -344,7 +348,7 @@
 .vtabs-stage {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: 1.75rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   background-color: var(--bg-recessed);
   border: 1px solid var(--border-mid);
@@ -353,7 +357,6 @@
 
 @media (min-width: 768px) {
   .vtabs-stage {
-    border-radius: 2.25rem;
     aspect-ratio: 1 / 1;
   }
 }
@@ -425,8 +428,8 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0.22rem 0.6rem;
-  border-radius: 999px;
-  background-color: rgba(227, 30, 36, 0.92);
+  border-radius: var(--radius-sm);
+  background-color: var(--brand-red);
   color: #FFFFFF;
   margin-bottom: 0.4rem;
 }
@@ -889,9 +892,10 @@
 .qty-chip {
   flex: 1 1 calc(25% - 0.38rem);
   min-width: 58px;
+  min-height: 36px;
   text-align: center;
-  padding: 0.32rem 0.45rem;
-  font-size: 0.76rem;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.8rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-hairline);
