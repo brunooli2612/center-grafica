@@ -221,7 +221,7 @@ function initLogo3D(container) {
   pmrem.dispose();
 
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
-  camera.position.set(0, 0, 5.4);
+  camera.position.set(0, 0, 4.7);
 
   const keyLight = new THREE.DirectionalLight(0xffffff, 1.1);
   keyLight.position.set(-3, 4, 5);
@@ -252,7 +252,7 @@ function initLogo3D(container) {
 
   const clock = new THREE.Clock();
 
-  renderer.setAnimationLoop(() => {
+  function render() {
     if (reducedMotion.matches) {
       // Pose estática levemente angulada
       symbol.position.y = 0;
@@ -272,7 +272,12 @@ function initLogo3D(container) {
     }
 
     renderer.render(scene, camera);
-  });
+  }
+
+  // Pausa o loop quando o palco sai da tela
+  new IntersectionObserver(([entry]) => {
+    renderer.setAnimationLoop(entry.isIntersecting ? render : null);
+  }).observe(container);
 }
 
 const stage = document.getElementById('logo-3d-stage');

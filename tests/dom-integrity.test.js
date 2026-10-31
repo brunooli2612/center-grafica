@@ -60,7 +60,7 @@ test('Impeccable Distill/Quieter & OpenMontage HyperFrames Animation craft floor
   // 2. OpenMontage HyperFrames Animation & 21st.dev VerticalTabs choreographies must be present
   assert.match(html, /id="hf-ticker-stack"/); // vertical-spring-ticker
   assert.match(html, /id="hf-scribble-path"/); // css-marker-patterns
-  assert.match(html, /class="hf-showcase-card"/); // split-tilt-cards + sine-wave-loop
+  assert.match(html, /id="logo-3d-stage"/); // símbolo 3D da hero (js/logo-3d.js)
   assert.match(html, /id="hero-cta-glow"/); // press-release-spring
   assert.match(html, /id="hf-marquee-track"/); // continuous marquee ribbon
   assert.match(html, /id="vtabs-showcase"/); // 21st.dev VerticalTabs interactive section
