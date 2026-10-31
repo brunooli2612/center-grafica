@@ -664,6 +664,24 @@
   border-color: var(--brand-red);
 }
 
+.catalog-grid {
+  position: relative;
+}
+
+.product-card.is-flip-exiting {
+  position: absolute;
+  margin: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: none !important;
+}
+
+.product-card.is-flip-moving {
+  position: relative;
+  z-index: 1;
+  transition: none !important;
+}
+
 .product-card__top {
   display: flex;
   align-items: center;

@@ -97,6 +97,21 @@ test('Marquee ribbon animates with pure CSS (independent of GSAP CDN and reduced
   assert.doesNotMatch(bundle, /gsap\.(to|fromTo)\(\s*marqueeTrack/);
 });
 
+test('Catalog filter implements FLIP animation with Web Animations API and reduced-motion bypass', () => {
+  const componentsCss = fs.readFileSync(path.join(rootDir, 'css/components.css'), 'utf8');
+  const mainJs = fs.readFileSync(path.join(rootDir, 'js/main.js'), 'utf8');
+  const bundle = fs.readFileSync(path.join(rootDir, 'js/app.bundle.js'), 'utf8');
+
+  assert.match(componentsCss, /\.product-card\.is-flip-exiting/);
+  assert.match(componentsCss, /\.product-card\.is-flip-moving/);
+  assert.match(mainJs, /CATALOG_FLIP_DURATION\s*=\s*(3[5-9]\d|4[0-5]\d)/);
+  assert.match(mainJs, /prefers-reduced-motion:\s*reduce/);
+  assert.match(mainJs, /is-flip-exiting/);
+  assert.match(mainJs, /is-flip-moving/);
+  assert.match(bundle, /CATALOG_FLIP_DURATION/);
+  assert.match(bundle, /is-flip-exiting/);
+});
+
 test('All referenced CSS, JS, and extracted real Instagram portfolio assets exist on disk', () => {
   const requiredFiles = [
     'PRODUCT.md',
