@@ -27,40 +27,39 @@
   background-color: var(--brand-red);
   color: #FFFFFF;
   border-color: transparent;
-  box-shadow: var(--shadow-btn);
 }
 
 .btn-primary:hover {
   background-color: var(--brand-red-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-btn-hover);
 }
 
 .btn-secondary {
   background-color: var(--bg-elevated);
   color: var(--ink-primary);
   border-color: var(--border-mid);
-  box-shadow: var(--shadow-btn);
 }
 
 .btn-secondary:hover {
   background-color: var(--ink-primary);
   color: var(--bg-elevated);
   border-color: var(--ink-primary);
-  transform: translateY(-2px);
 }
 
 .btn-whatsapp {
   background-color: var(--whatsapp-green);
   color: #FFFFFF;
   border-color: transparent;
-  box-shadow: var(--shadow-btn);
+}
+
+/* Ícone do WhatsApp dentro dos botões (herda a cor do texto) */
+.wa-icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
 }
 
 .btn-whatsapp:hover {
   background-color: var(--whatsapp-green-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-btn-hover);
 }
 
 /* Seletor de Tema Limpo (Claro / Escuro / Auto) */
@@ -87,6 +86,10 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background-color 140ms ease, color 140ms ease;
+}
+
+.theme-btn__icon {
+  flex-shrink: 0;
 }
 
 .theme-btn[aria-checked="true"] {
@@ -167,12 +170,11 @@
 }
 
 .vtabs-kicker {
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.28em;
-  color: var(--ink-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--ink-secondary);
+  margin: 0;
   display: block;
 }
 
@@ -228,16 +230,6 @@
   transform-origin: top;
 }
 
-.vtabs-num {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 600;
-  margin-top: 0.35rem;
-  font-variant-numeric: tabular-nums;
-  opacity: 0.55;
-  flex-shrink: 0;
-}
-
 .vtabs-body {
   display: flex;
   flex-direction: column;
@@ -246,6 +238,15 @@
 }
 
 .vtabs-title {
+  /* É o botão da aba: zera o estilo nativo */
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
   font-family: var(--font-display);
   font-size: clamp(1.3rem, 1.9vw, 1.85rem);
   font-weight: 600;
@@ -258,15 +259,20 @@
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
+  /* Fechado: some também do Tab do teclado */
+  visibility: hidden;
   transition:
     grid-template-rows 320ms cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 260ms ease;
+    opacity 260ms ease,
+    visibility 0s linear 320ms;
   overflow: hidden;
 }
 
 .vtabs-item.is-active .vtabs-expand {
   grid-template-rows: 1fr;
   opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .vtabs-expand-inner {
@@ -289,7 +295,11 @@
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--brand-red);
-  padding: 0.2rem 0;
+  min-height: 40px;
+  padding: 0.5rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .vtabs-cta-link:hover {
@@ -315,16 +325,14 @@
 .vtabs-stage {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: 1.75rem;
+  border-radius: var(--radius-md);
   overflow: hidden;
   background-color: var(--bg-recessed);
   border: 1px solid var(--border-mid);
-  box-shadow: var(--shadow-sheet);
 }
 
 @media (min-width: 768px) {
   .vtabs-stage {
-    border-radius: 2.25rem;
     aspect-ratio: 1 / 1;
   }
 }
@@ -390,14 +398,12 @@
 
 .vtabs-slide-client {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
   padding: 0.22rem 0.6rem;
-  border-radius: 999px;
-  background-color: rgba(227, 30, 36, 0.92);
+  border-radius: var(--radius-sm);
+  background-color: var(--brand-red);
   color: #FFFFFF;
   margin-bottom: 0.4rem;
 }
@@ -429,9 +435,7 @@
   width: 2.85rem;
   height: 2.85rem;
   border-radius: 999px;
-  background-color: var(--bg-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: var(--bg-elevated);
   border: 1px solid var(--border-mid);
   display: flex;
   align-items: center;
@@ -442,14 +446,14 @@
 }
 
 .vtabs-nav-btn:hover {
-  background-color: var(--bg-elevated);
+  background-color: var(--bg-surface);
 }
 
 .vtabs-nav-btn:active {
   transform: scale(0.9);
 }
 
-/* Cards de Portfólio Limpos com Reflexo de Verniz UV (3D Tilt) */
+/* Cards de Portfólio Limpos */
 .portfolio-card {
   background-color: var(--bg-elevated);
   border: 1px solid var(--border-hairline);
@@ -458,12 +462,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: var(--shadow-sheet);
-  transition: transform 240ms var(--ease-out-quart), box-shadow 240ms var(--ease-out-quart);
+  transition: border-color 200ms ease;
 }
 
 .portfolio-card:hover {
-  box-shadow: var(--shadow-sheet-hover);
+  border-color: var(--border-mid);
 }
 
 .portfolio-card__media {
@@ -489,8 +492,7 @@
   top: 0.75rem;
   left: 0.75rem;
   padding: 0.25rem 0.65rem;
-  background-color: var(--bg-glass);
-  backdrop-filter: blur(6px);
+  background-color: var(--bg-elevated);
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-sm);
   font-size: 0.74rem;
@@ -608,7 +610,7 @@
   color: var(--ink-primary);
 }
 
-/* Cards de Produto Limpos e Escaneáveis */
+/* Cards de Produto Limpos e Escaneáveis (separados por tom sobre --bg-surface) */
 .product-card {
   background-color: var(--bg-elevated);
   border: 1px solid var(--border-hairline);
@@ -618,18 +620,33 @@
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-4);
-  box-shadow: var(--shadow-sheet);
-  transition: transform 200ms var(--ease-out-quart), box-shadow 200ms var(--ease-out-quart), border-color 200ms ease;
+  transition: border-color 180ms ease, background-color 180ms ease;
 }
 
 .product-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-sheet-hover);
   border-color: var(--border-mid);
 }
 
 .product-card.is-selected {
   border-color: var(--brand-red);
+}
+
+.catalog-grid {
+  position: relative;
+}
+
+.product-card.is-flip-exiting {
+  position: absolute;
+  margin: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: none !important;
+}
+
+.product-card.is-flip-moving {
+  position: relative;
+  z-index: 1;
+  transition: none !important;
 }
 
 .product-card__top {
@@ -719,13 +736,12 @@
   font-size: 0.88rem;
 }
 
-/* Formulário de Orçamento e Preview do WhatsApp */
+/* Formulário de Orçamento e Preview do WhatsApp (separados por tom sobre --bg-canvas) */
 .quote-card {
-  background-color: var(--bg-elevated);
-  border: 1px solid var(--border-mid);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
   border-radius: var(--radius-md);
   padding: var(--space-6);
-  box-shadow: var(--shadow-sheet);
   min-width: 0;
   max-width: 100%;
   width: 100%;
@@ -765,7 +781,8 @@
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0, 1fr): a coluna não cresce além do card por causa de conteúdo sem quebra */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   min-width: 0;
   max-width: 100%;
@@ -773,9 +790,15 @@
   box-sizing: border-box;
 }
 
+/* Botões do formulário quebram linha em vez de estourar o card no celular */
+.form-grid .btn {
+  white-space: normal;
+  text-align: center;
+}
+
 .form-row-2 {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
   min-width: 0;
   max-width: 100%;
@@ -785,7 +808,7 @@
 
 @media (min-width: 680px) {
   .form-row-2 {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
@@ -805,6 +828,10 @@
   color: var(--ink-primary);
 }
 
+.field-required {
+  color: var(--brand-red);
+}
+
 .label-optional {
   font-weight: 400;
   color: var(--ink-muted);
@@ -817,7 +844,7 @@
   min-width: 0;
   box-sizing: border-box;
   padding: 0.72rem 0.9rem;
-  background-color: var(--bg-surface);
+  background-color: var(--bg-elevated);
   border: 1px solid var(--border-mid);
   border-radius: var(--radius-sm);
   font-size: 0.92rem;
@@ -849,9 +876,10 @@
 .qty-chip {
   flex: 1 1 calc(25% - 0.38rem);
   min-width: 58px;
+  min-height: 36px;
   text-align: center;
-  padding: 0.32rem 0.45rem;
-  font-size: 0.76rem;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.8rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-hairline);
@@ -869,11 +897,31 @@
   border-color: var(--ink-primary);
 }
 
+/* Selo embaixo do número; os chips da linha ficam com a mesma altura */
+.qty-chip:has(.qty-chip__tag),
+.quantity-presets:has(.qty-chip__tag) .qty-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.15;
+}
+
+.qty-chip__tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--brand-red);
+}
+
+.qty-chip[aria-pressed="true"] .qty-chip__tag {
+  color: inherit;
+}
+
 .process-recommendation {
   padding: var(--space-4);
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-sm);
-  background-color: var(--bg-surface);
+  background-color: var(--bg-elevated);
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
@@ -914,11 +962,10 @@
 }
 
 .whatsapp-preview-card {
-  background-color: var(--bg-elevated);
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-md);
   padding: var(--space-6);
-  box-shadow: var(--shadow-sheet);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -954,8 +1001,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--whatsapp-green);
   white-space: nowrap;
@@ -969,13 +1017,13 @@
 }
 
 .whatsapp-message-box {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
   padding: var(--space-4);
-  background-color: var(--bg-surface);
+  background-color: var(--bg-elevated);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-hairline);
   color: var(--ink-primary);
@@ -1000,6 +1048,25 @@
   .preview-actions .btn {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* Celular: o resumo aparece depois do formulário, então o envio fica nele.
+   Ordem: preencher → conferir o resumo → enviar */
+@media (max-width: 1023px) {
+  .quote-submit-row {
+    display: none;
+  }
+
+  .preview-send-link,
+  .preview-send-link:hover {
+    background-color: var(--whatsapp-green);
+    color: #FFFFFF;
+    border-color: transparent;
+  }
+
+  .preview-send-link:hover {
+    background-color: var(--whatsapp-green-hover);
   }
 }
 

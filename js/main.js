@@ -1,6 +1,5 @@
 import {
   CATALOG_PRODUCTS,
-  PORTFOLIO_ITEMS,
   PREPRESS_CHECKLIST_ITEMS,
   PRODUCT_CATEGORIES
 } from './catalog-data.js';
@@ -50,8 +49,14 @@ function initThemeSwitcher() {
   const buttons = Array.from(document.querySelectorAll('[data-theme-option]'));
   const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'light';
 
+  // "Auto" segue o claro/escuro do sistema operacional
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  let currentMode = savedTheme;
+
   function applyTheme(mode) {
-    htmlEl.setAttribute('data-theme', mode);
+    currentMode = mode;
+    const resolved = mode === 'system' ? (systemDark.matches ? 'dark' : 'light') : mode;
+    htmlEl.setAttribute('data-theme', resolved);
     localStorage.setItem(THEME_STORAGE_KEY, mode);
     buttons.forEach((btn) => {
       const isSelected = btn.getAttribute('data-theme-option') === mode;
@@ -60,6 +65,10 @@ function initThemeSwitcher() {
   }
 
   applyTheme(savedTheme);
+
+  systemDark.addEventListener('change', () => {
+    if (currentMode === 'system') applyTheme('system');
+  });
 
   buttons.forEach((btn, index) => {
     btn.addEventListener('click', () => {
@@ -101,46 +110,6 @@ function initMobileMenu() {
   });
 }
 
-function renderPortfolio() {
-  const grid = document.getElementById('portfolio-grid');
-  if (!grid) return;
-
-  grid.innerHTML = PORTFOLIO_ITEMS.map(
-    (item) => `
-    <article class="portfolio-card" data-tilt-card>
-      <div class="portfolio-card__media">
-        <img
-          src="${item.image}"
-          alt="${item.title} — ${item.client}"
-          loading="lazy"
-          width="640"
-          height="480"
-        />
-        <span class="portfolio-card__tag">${item.category}</span>
-      </div>
-      <div class="portfolio-card__body">
-        <span class="portfolio-card__client">Cliente: ${item.client}</span>
-        <h3 class="portfolio-card__title">${item.title}</h3>
-        <p class="portfolio-card__desc">${item.description}</p>
-        <div class="portfolio-card__footer">
-          <span class="portfolio-card__substrate">${item.substrate}</span>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-select-product="${item.productRef}"
-            aria-label="Orçar projeto similar a ${item.title}"
-          >
-            Quero um igual
-          </button>
-        </div>
-      </div>
-    </article>
-  `
-  ).join('');
-
-  initTiltCards();
-}
-
 function initTiltCards() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -166,77 +135,54 @@ function initTiltCards() {
   });
 }
 
+const CATALOG_FLIP_DURATION = 400;
+const CATALOG_FLIP_EXIT_DURATION = 350;
+const CATALOG_FLIP_EASING = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
 function renderCategoryPills() {
   const container = document.getElementById('catalog-category-pills');
   if (!container) return;
 
-  container.innerHTML = PRODUCT_CATEGORIES.map(
-    (cat) => `
-    <button
-      type="button"
-      class="filter-pill"
-      data-category="${cat.id}"
-      aria-pressed="${state.activeCategory === cat.id}"
-    >
-      ${cat.label}
-    </button>
-  `
-  ).join('');
+  const existingButtons = container.querySelectorAll('[data-category]');
+  if (!container.dataset.initialized || existingButtons.length !== PRODUCT_CATEGORIES.length) {
+    container.innerHTML = PRODUCT_CATEGORIES.map(
+      (cat) => `
+      <button
+        type="button"
+        class="filter-pill"
+        data-category="${cat.id}"
+        aria-pressed="${state.activeCategory === cat.id}"
+      >
+        ${cat.label}
+      </button>
+    `
+    ).join('');
+    container.dataset.initialized = 'true';
 
-  container.querySelectorAll('[data-category]').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      state.activeCategory = btn.getAttribute('data-category');
-      renderCategoryPills();
-      renderCatalogGrid();
-    });
-  });
-}
-
-function renderCatalogGrid() {
-  const grid = document.getElementById('catalog-grid');
-  const countEl = document.getElementById('catalog-results-count');
-  if (!grid) return;
-
-  const filtered = filterProducts({
-    category: state.activeCategory,
-    query: state.searchQuery
-  });
-
-  if (countEl) {
-    countEl.textContent =
-      filtered.length === 1
-        ? '1 solução encontrada'
-        : `${filtered.length} soluções encontradas`;
-  }
-
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div class="catalog-empty" role="status">
-        <h3>Nenhum item encontrado para "${state.searchQuery}"</h3>
-        <p>Produzimos projetos gráficos sob medida. Limpe o filtro ou peça seu orçamento personalizado abaixo.</p>
-        <button type="button" class="btn btn-secondary" id="reset-catalog-btn">
-          Mostrar todos os produtos
-        </button>
-      </div>
-    `;
-    const resetBtn = document.getElementById('reset-catalog-btn');
-    if (resetBtn) {
-      resetBtn.addEventListener('click', () => {
-        state.activeCategory = 'todos';
-        state.searchQuery = '';
-        const searchInput = document.getElementById('catalog-search-input');
-        if (searchInput) searchInput.value = '';
+    container.querySelectorAll('[data-category]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const nextCategory = btn.getAttribute('data-category');
+        if (nextCategory === state.activeCategory) {
+          btn.setAttribute('aria-pressed', 'true');
+          return;
+        }
+        state.activeCategory = nextCategory;
         renderCategoryPills();
-        renderCatalogGrid();
+        renderCatalogGrid({ animate: true });
       });
-    }
+    });
     return;
   }
 
-  grid.innerHTML = filtered
-    .map((product) => {
-      const isSelected = product.id === state.selectedProductId;
-      return `
+  existingButtons.forEach((btn) => {
+    const isActive = btn.getAttribute('data-category') === state.activeCategory;
+    btn.setAttribute('aria-pressed', String(isActive));
+  });
+}
+
+function buildProductCardHtml(product) {
+  const isSelected = product.id === state.selectedProductId;
+  return `
       <article class="product-card ${isSelected ? 'is-selected' : ''}" data-product-card="${product.id}">
         <div class="product-card__top">
           <div class="product-card__icon">
@@ -274,8 +220,277 @@ function renderCatalogGrid() {
         </div>
       </article>
     `;
-    })
-    .join('');
+}
+
+function createProductCardElement(product) {
+  const template = document.createElement('template');
+  template.innerHTML = buildProductCardHtml(product).trim();
+  return template.content.firstElementChild;
+}
+
+function syncProductCardSelection(card, product) {
+  const isSelected = product.id === state.selectedProductId;
+  card.classList.toggle('is-selected', isSelected);
+  const btn = card.querySelector('[data-select-product]');
+  if (btn) {
+    btn.classList.toggle('btn-primary', isSelected);
+    btn.classList.toggle('btn-secondary', !isSelected);
+    btn.textContent = isSelected ? 'Selecionado' : 'Orçar este item';
+  }
+}
+
+function renderEmptyCatalogState(grid, preserveExiting = false) {
+  if (!preserveExiting) {
+    grid.innerHTML = '';
+  }
+  const emptyWrap = document.createElement('div');
+  emptyWrap.className = 'catalog-empty';
+  emptyWrap.setAttribute('role', 'status');
+  emptyWrap.innerHTML = `
+    <h3>Nenhum item encontrado para "${state.searchQuery}"</h3>
+    <p>Produzimos projetos gráficos sob medida. Limpe o filtro ou peça seu orçamento personalizado abaixo.</p>
+    <button type="button" class="btn btn-secondary" id="reset-catalog-btn">
+      Mostrar todos os produtos
+    </button>
+  `;
+  grid.appendChild(emptyWrap);
+
+  const resetBtn = emptyWrap.querySelector('#reset-catalog-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      state.activeCategory = 'todos';
+      state.searchQuery = '';
+      const searchInput = document.getElementById('catalog-search-input');
+      if (searchInput) searchInput.value = '';
+      renderCategoryPills();
+      renderCatalogGrid({ animate: true });
+    });
+  }
+}
+
+function renderCatalogGrid({ animate = false } = {}) {
+  const grid = document.getElementById('catalog-grid');
+  const countEl = document.getElementById('catalog-results-count');
+  if (!grid) return;
+
+  const filtered = filterProducts({
+    category: state.activeCategory,
+    query: state.searchQuery
+  });
+
+  if (countEl) {
+    countEl.textContent =
+      filtered.length === 1
+        ? '1 solução encontrada'
+        : `${filtered.length} soluções encontradas`;
+  }
+
+  const reducedMotion =
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const shouldAnimate =
+    animate &&
+    !reducedMotion &&
+    typeof Element !== 'undefined' &&
+    typeof Element.prototype.animate === 'function';
+
+  if (!shouldAnimate) {
+    grid.querySelectorAll('.product-card').forEach((card) => {
+      if (typeof card.getAnimations === 'function') {
+        card.getAnimations().forEach((anim) => anim.cancel());
+      }
+    });
+
+    if (filtered.length === 0) {
+      renderEmptyCatalogState(grid, false);
+      return;
+    }
+
+    grid.innerHTML = filtered.map((product) => buildProductCardHtml(product)).join('');
+    return;
+  }
+
+  // FLIP (First, Last, Invert, Play)
+  const gridRect = grid.getBoundingClientRect();
+  const firstStates = new Map();
+  const activeCardMap = new Map();
+
+  // Remove imediatamente qualquer card em saída de uma troca anterior interrompida
+  grid.querySelectorAll('.product-card.is-flip-exiting').forEach((exitingCard) => {
+    if (typeof exitingCard.getAnimations === 'function') {
+      exitingCard.getAnimations().forEach((anim) => anim.cancel());
+    }
+    exitingCard.remove();
+  });
+
+  // 1. FIRST: mede posição e opacidade atuais dos cards ativos
+  grid.querySelectorAll('.product-card[data-product-card]:not(.is-flip-exiting)').forEach((card) => {
+    const id = card.getAttribute('data-product-card');
+    const rect = card.getBoundingClientRect();
+    const width = card.offsetWidth || rect.width;
+    const height = card.offsetHeight || rect.height;
+    const opacity = parseFloat(window.getComputedStyle(card).opacity);
+    firstStates.set(id, {
+      left: rect.left + rect.width / 2 - width / 2,
+      top: rect.top + rect.height / 2 - height / 2,
+      width,
+      height,
+      opacity: Number.isFinite(opacity) && opacity > 0.05 ? opacity : 1
+    });
+    activeCardMap.set(id, card);
+    if (typeof card.getAnimations === 'function') {
+      card.getAnimations().forEach((anim) => anim.cancel());
+    }
+    card.classList.remove('is-flip-moving');
+  });
+
+  const prevEmpty = grid.querySelector('.catalog-empty');
+  if (prevEmpty) prevEmpty.remove();
+
+  const nextIds = new Set(filtered.map((p) => p.id));
+
+  // Cards que saem: fixados na coordenada antiga e esmaecem
+  activeCardMap.forEach((card, id) => {
+    if (nextIds.has(id)) return;
+
+    const first = firstStates.get(id);
+    const left = first.left - gridRect.left;
+    const top = first.top - gridRect.top;
+
+    card.classList.add('is-flip-exiting');
+    card.setAttribute('aria-hidden', 'true');
+    card.querySelectorAll('button, a, input, [tabindex]').forEach((el) => {
+      el.setAttribute('tabindex', '-1');
+    });
+    card.style.left = `${left}px`;
+    card.style.top = `${top}px`;
+    card.style.width = `${first.width}px`;
+    card.style.height = `${first.height}px`;
+
+    const exitAnim = card.animate(
+      [
+        { opacity: first.opacity, transform: 'scale(1)' },
+        { opacity: 0, transform: 'scale(0.95)' }
+      ],
+      {
+        duration: CATALOG_FLIP_EXIT_DURATION,
+        easing: CATALOG_FLIP_EASING,
+        fill: 'forwards'
+      }
+    );
+
+    let exitTimer = null;
+    const removeExiting = () => {
+      if (exitTimer) {
+        clearTimeout(exitTimer);
+        exitTimer = null;
+      }
+      if (card.parentNode) card.remove();
+    };
+    exitTimer = setTimeout(removeExiting, CATALOG_FLIP_EXIT_DURATION + 40);
+    exitAnim.onfinish = removeExiting;
+    exitAnim.oncancel = removeExiting;
+  });
+
+  if (filtered.length === 0) {
+    renderEmptyCatalogState(grid, true);
+    const newEmptyEl = grid.querySelector('.catalog-empty');
+    if (newEmptyEl) {
+      newEmptyEl.animate(
+        [
+          { opacity: 0, transform: 'scale(0.96)' },
+          { opacity: 1, transform: 'scale(1)' }
+        ],
+        {
+          duration: CATALOG_FLIP_DURATION,
+          easing: CATALOG_FLIP_EASING
+        }
+      );
+    }
+    return;
+  }
+
+  // 2. Atualiza o DOM mantendo a instância dos cards que permanecem
+  const finalCards = filtered.map((product) => {
+    let card = activeCardMap.get(product.id);
+    if (card) {
+      syncProductCardSelection(card, product);
+    } else {
+      card = createProductCardElement(product);
+    }
+    grid.appendChild(card);
+    return { product, card };
+  });
+
+  // 3. LAST, INVERT & PLAY
+  finalCards.forEach(({ product, card }) => {
+    const first = firstStates.get(product.id);
+    card.classList.add('is-flip-moving');
+
+    let anim = null;
+    if (first) {
+      const lastRect = card.getBoundingClientRect();
+      const dx = first.left - lastRect.left;
+      const dy = first.top - lastRect.top;
+      const startOpacity = first.opacity < 0.99 ? first.opacity : 1;
+
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5 || startOpacity < 1) {
+        anim = card.animate(
+          [
+            {
+              transform: `translate(${dx}px, ${dy}px)`,
+              opacity: startOpacity
+            },
+            {
+              transform: 'translate(0px, 0px)',
+              opacity: 1
+            }
+          ],
+          {
+            duration: CATALOG_FLIP_DURATION,
+            easing: CATALOG_FLIP_EASING
+          }
+        );
+      }
+    } else {
+      anim = card.animate(
+        [
+          {
+            opacity: 0,
+            transform: 'scale(0.94)'
+          },
+          {
+            opacity: 1,
+            transform: 'scale(1)'
+          }
+        ],
+        {
+          duration: CATALOG_FLIP_DURATION,
+          easing: CATALOG_FLIP_EASING
+        }
+      );
+    }
+
+    if (anim) {
+      let moveTimer = null;
+      const clearMoving = () => {
+        if (moveTimer) {
+          clearTimeout(moveTimer);
+          moveTimer = null;
+        }
+        card.classList.remove('is-flip-moving');
+      };
+      moveTimer = setTimeout(() => {
+        if (anim.playState === 'running') anim.finish();
+        clearMoving();
+      }, CATALOG_FLIP_DURATION + 40);
+      anim.onfinish = clearMoving;
+      anim.oncancel = clearMoving;
+    } else {
+      card.classList.remove('is-flip-moving');
+    }
+  });
 }
 
 function populateProductSelect() {
@@ -314,6 +529,12 @@ function updateProductDependentFields(productId, preserveQuantity = false) {
     }
 
     if (presetsContainer) {
+      // Marca as tiragens que já entram em Offset (melhor custo unitário),
+      // só quando a linha mistura Digital e Offset
+      const isOffset = (qty) => /Offset Industrial/.test(recommendPrintProcess(product.id, qty).process);
+      const offsetCount = product.suggestedQuantities.filter(isOffset).length;
+      const markOffset = offsetCount > 0 && offsetCount < product.suggestedQuantities.length;
+
       presetsContainer.innerHTML = product.suggestedQuantities
         .map(
           (qty) => `
@@ -323,7 +544,7 @@ function updateProductDependentFields(productId, preserveQuantity = false) {
             data-preset-qty="${qty}"
             aria-pressed="${Number(state.quantity) === qty}"
           >
-            ${qty} un.
+            ${qty} un.${markOffset && isOffset(qty) ? ' <span class="qty-chip__tag">Offset</span>' : ''}
           </button>
         `
         )
@@ -454,7 +675,7 @@ function bindEvents() {
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       state.searchQuery = e.target.value;
-      renderCatalogGrid();
+      renderCatalogGrid({ animate: true });
     });
   }
 
@@ -464,6 +685,14 @@ function bindEvents() {
       const prodId = selectBtn.getAttribute('data-select-product');
       triggerPressSpring(selectBtn);
       selectProductAndScroll(prodId, true);
+      // Atalhos que já chegam com um acabamento escolhido (ex.: aba /04)
+      const finish = selectBtn.getAttribute('data-select-finish');
+      const finishSelect = document.getElementById('quote-finish-select');
+      if (finish && finishSelect && [...finishSelect.options].some((o) => o.value === finish)) {
+        state.finish = finish;
+        finishSelect.value = finish;
+        syncQuoteUI();
+      }
     }
   });
 
@@ -560,6 +789,12 @@ function bindEvents() {
           feedbackEl.hidden = false;
           feedbackEl.className = 'form-feedback is-error';
           feedbackEl.textContent = validation.errors.join(' ');
+          feedbackEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Leva o cursor ao primeiro campo obrigatório vazio
+          const emptyField = [...quoteForm.querySelectorAll('[required], [aria-required="true"]')].find(
+            (field) => !field.value.trim() && field.offsetParent !== null
+          );
+          if (emptyField) emptyField.focus({ preventScroll: true });
         }
         return;
       }
@@ -575,6 +810,23 @@ function bindEvents() {
       window.open(url, '_blank', 'noopener,noreferrer');
     });
   }
+
+  // O link do resumo passa pela mesma validação do formulário
+
+  const directLink = document.getElementById('whatsapp-direct-preview-link');
+
+  if (directLink && quoteForm) {
+
+    directLink.addEventListener('click', (event) => {
+
+      event.preventDefault();
+
+      quoteForm.requestSubmit();
+
+    });
+
+  }
+
 
   const copyBtn = document.getElementById('copy-quote-btn');
   if (copyBtn) {
@@ -664,22 +916,10 @@ function initVerticalSpringTicker() {
   function advance() {
     if (isCycling) return;
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Movimento reduzido: o ticker fica parado no primeiro item
+    if (isReduced) return;
     const slotHeight = items[0].getBoundingClientRect().height || 54;
     currentIndex++;
-
-    if (isReduced) {
-      tickerStack.style.transition = 'opacity 250ms ease';
-      tickerStack.style.opacity = '0';
-      setTimeout(() => {
-        tickerStack.style.transform = `translateY(-${currentIndex * slotHeight}px)`;
-        tickerStack.style.opacity = '1';
-        if (currentIndex >= stepCount) {
-          currentIndex = 0;
-          tickerStack.style.transform = 'translateY(0px)';
-        }
-      }, 260);
-      return;
-    }
 
     // Curva física OpenMontage: back.out(1.7) overshoot com cubic-bezier
     tickerStack.style.transition = 'transform 550ms cubic-bezier(0.34, 1.56, 0.64, 1)';
@@ -743,36 +983,9 @@ function initOpenMontageMotion() {
     });
   }
 
-  // Mesa Gráfica Hero: entrada com profundidade e perspectiva editorial
-  const specimenStage = document.getElementById('hero-specimen-stage');
-  if (specimenStage) {
-    gsap.fromTo(
-      specimenStage,
-      { y: 26, opacity: 0, rotateY: 4 },
-      { y: 0, opacity: 1, rotateY: 0, duration: 0.75, delay: 0.2, ease: 'power2.out' }
-    );
-  }
 
   // 5. Faixa de especialidades: loop em CSS (@keyframes hf-marquee-scroll).
   //    A velocidade no hover é controlada por initMarqueeHoverSpeed(), fora deste bloco.
-
-  // 6. ScrollTrigger suave para seções ao rolar a página
-  if (window.ScrollTrigger) {
-    gsap.utils.toArray('.portfolio-card, .feature-card').forEach((card, i) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 90%',
-          toggleActions: 'play none none none'
-        },
-        y: 24,
-        opacity: 0,
-        duration: 0.55,
-        delay: (i % 4) * 0.07,
-        ease: 'power2.out'
-      });
-    });
-  }
 }
 
 /**
@@ -855,7 +1068,8 @@ function initVerticalTabs() {
     tabs.forEach((tab, idx) => {
       const isSelected = idx === activeIndex;
       tab.classList.toggle('is-active', isSelected);
-      tab.setAttribute('aria-selected', String(isSelected));
+      const tabButton = tab.querySelector('[role=\"tab\"]');
+      if (tabButton) tabButton.setAttribute('aria-selected', String(isSelected));
     });
 
     const prevSlide = slides[prevIndex];
@@ -953,7 +1167,7 @@ function initVerticalTabs() {
  * Faixa de especialidades (21st.dev LogoMarquee: duration=80, durationOnHover=25).
  * O loop é CSS puro; aqui só muda a velocidade no hover via Web Animations API,
  * com rampa suave em vez de salto. Não depende do GSAP nem é bloqueado por
- * prefers-reduced-motion (o CSS já desacelera a faixa nesse caso).
+ * prefers-reduced-motion (o CSS para a faixa nesse caso).
  */
 function initMarqueeHoverSpeed() {
   const track = document.getElementById('hf-marquee-track');
@@ -986,79 +1200,50 @@ function initMarqueeHoverSpeed() {
   track.addEventListener('mouseleave', () => rampTo(1));
 }
 
+
 /**
- * Mesa de Amostras Gráfica no Hero (Decisão UX/UI):
- * Substitui os 4 mini-cards fragmentados por um palco de lâmina única,
- * com transição suave, seletor tátil e pausa no hover.
+ * Como funciona: a linha vermelha acompanha a rolagem e acende cada passo.
+ * Movimento reduzido: linha cheia e todos os passos acesos, sem acompanhar a rolagem.
  */
-function initHeroSpecimenStage() {
-  const stage = document.getElementById('hero-specimen-stage');
-  if (!stage) return;
+function initHowTimeline() {
+  const list = document.getElementById('how-steps');
+  if (!list) return;
+  const steps = [...list.querySelectorAll('.how-step')];
 
-  const slides = Array.from(stage.querySelectorAll('.hf-showcase-card, .specimen-slide'));
-  const pills = Array.from(stage.querySelectorAll('.specimen-pill'));
-  if (slides.length === 0) return;
-
-  let currentIndex = 0;
-  let isPaused = false;
-  let timer = null;
-
-  function goToSpecimen(index) {
-    currentIndex = (index + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('is-active', i === currentIndex);
-    });
-    pills.forEach((pill, i) => {
-      const active = i === currentIndex;
-      pill.classList.toggle('is-active', active);
-      pill.setAttribute('aria-selected', String(active));
-    });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    list.style.setProperty('--how-progress', '1');
+    steps.forEach((s) => s.classList.add('is-reached'));
+    return;
   }
 
-  function startCycle() {
-    stopCycle();
-    if (isPaused) return;
-    timer = setInterval(() => {
-      if (!isPaused) {
-        goToSpecimen(currentIndex + 1);
-      }
-    }, 4500);
-  }
-
-  function stopCycle() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const rect = list.getBoundingClientRect();
+    const anchor = window.innerHeight * 0.6; // a linha "chega" a 60% da altura da tela
+    const progress = Math.min(1, Math.max(0, (anchor - rect.top) / rect.height));
+    list.style.setProperty('--how-progress', progress.toFixed(3));
+    steps.forEach((step) => {
+      step.classList.toggle('is-reached', step.getBoundingClientRect().top + 12 < anchor);
+    });
+  };
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
     }
-  }
-
-  pills.forEach((pill, i) => {
-    pill.addEventListener('click', () => {
-      goToSpecimen(i);
-      startCycle();
-    });
-  });
-
-  stage.addEventListener('mouseenter', () => {
-    isPaused = true;
-    stopCycle();
-  });
-
-  stage.addEventListener('mouseleave', () => {
-    isPaused = false;
-    startCycle();
-  });
-
-  startCycle();
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
 }
 
 function initApp() {
   initThemeSwitcher();
   initMobileMenu();
-  initHeroSpecimenStage();
-  renderPortfolio();
   initVerticalTabs();
   initMarqueeHoverSpeed();
+  initHowTimeline();
   renderCategoryPills();
   populateProductSelect();
   updateProductDependentFields(state.selectedProductId, false);

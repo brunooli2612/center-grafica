@@ -60,7 +60,7 @@ test('Impeccable Distill/Quieter & OpenMontage HyperFrames Animation craft floor
   // 2. OpenMontage HyperFrames Animation & 21st.dev VerticalTabs choreographies must be present
   assert.match(html, /id="hf-ticker-stack"/); // vertical-spring-ticker
   assert.match(html, /id="hf-scribble-path"/); // css-marker-patterns
-  assert.match(html, /class="hf-showcase-card"/); // split-tilt-cards + sine-wave-loop
+  assert.match(html, /id="logo-3d-stage"/); // símbolo 3D da hero (js/logo-3d.js)
   assert.match(html, /id="hero-cta-glow"/); // press-release-spring
   assert.match(html, /id="hf-marquee-track"/); // continuous marquee ribbon
   assert.match(html, /id="vtabs-showcase"/); // 21st.dev VerticalTabs interactive section
@@ -97,6 +97,21 @@ test('Marquee ribbon animates with pure CSS (independent of GSAP CDN and reduced
   assert.doesNotMatch(bundle, /gsap\.(to|fromTo)\(\s*marqueeTrack/);
 });
 
+test('Catalog filter implements FLIP animation with Web Animations API and reduced-motion bypass', () => {
+  const componentsCss = fs.readFileSync(path.join(rootDir, 'css/components.css'), 'utf8');
+  const mainJs = fs.readFileSync(path.join(rootDir, 'js/main.js'), 'utf8');
+  const bundle = fs.readFileSync(path.join(rootDir, 'js/app.bundle.js'), 'utf8');
+
+  assert.match(componentsCss, /\.product-card\.is-flip-exiting/);
+  assert.match(componentsCss, /\.product-card\.is-flip-moving/);
+  assert.match(mainJs, /CATALOG_FLIP_DURATION\s*=\s*(3[5-9]\d|4[0-5]\d)/);
+  assert.match(mainJs, /prefers-reduced-motion:\s*reduce/);
+  assert.match(mainJs, /is-flip-exiting/);
+  assert.match(mainJs, /is-flip-moving/);
+  assert.match(bundle, /CATALOG_FLIP_DURATION/);
+  assert.match(bundle, /is-flip-exiting/);
+});
+
 test('All referenced CSS, JS, and extracted real Instagram portfolio assets exist on disk', () => {
   const requiredFiles = [
     'PRODUCT.md',
@@ -118,7 +133,8 @@ test('All referenced CSS, JS, and extracted real Instagram portfolio assets exis
     'assets/images/portfolio-frotas.png',
     'assets/images/portfolio-agendas.png',
     'assets/images/portfolio-terrasco.png',
-    'assets/images/logo-center.svg'
+    'assets/images/logo-center.svg',
+    'assets/images/simbolo-center.svg'
   ];
 
   for (const relPath of requiredFiles) {

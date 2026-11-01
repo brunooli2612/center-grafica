@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Símbolo Center Gráfica">
+  <!-- Redesenhado a partir de assets/simbolo-referencia-whatsapp.jpg (aproximação, não é o vetor original) -->
+  <defs>
+    <clipPath id="sc-outer">
+      <rect x="0" y="0" width="100" height="100" rx="16" />
+    </clipPath>
+    <clipPath id="sc-top">
+      <rect x="0" y="0" width="100" height="39" />
+    </clipPath>
+    <!-- Centro vazado: recorta todas as faixas, o fundo da página aparece pelo furo -->
+    <mask id="sc-vazado" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+      <rect x="0" y="0" width="100" height="100" fill="#FFFFFF" />
+      <rect x="32" y="29.5" width="58" height="60" rx="9" fill="#000000" />
+    </mask>
+    <linearGradient id="sc-red-magenta" x1="0.35" y1="1" x2="1" y2="0.45">
+      <stop offset="0" stop-color="#E0333F" />
+      <stop offset="0.55" stop-color="#E0333F" />
+      <stop offset="0.8" stop-color="#D12A99" />
+    </linearGradient>
+  </defs>
+
+  <g clip-path="url(#sc-outer)" mask="url(#sc-vazado)">
+    <!-- Base ciano (faixa de cima) -->
+    <rect id="sc-ciano" x="0" y="0" width="100" height="100" fill="#00AEEF" />
+    <!-- Amarelo (lado esquerdo, embaixo) -->
+    <rect id="sc-amarelo" x="0" y="30" width="32" height="70" fill="#FCD125" />
+    <!-- Verde (lado esquerdo, em cima, borda inferior em curva) -->
+    <path id="sc-verde" d="M0 20.6 H32 V67.3 C24 66.5 17 61 13.3 52 C10 44 6 35 0 30 Z" fill="#00A651" />
+    <!-- Moldura interna: vermelho embaixo virando magenta à direita -->
+    <path id="sc-vermelho-magenta" d="M32 24 Q32 12 44 12 H100 V100 H32 Z" fill="url(#sc-red-magenta)" />
+    <!-- Moldura interna: azul-marinho em cima -->
+    <path id="sc-marinho" d="M32 24 Q32 12 44 12 H100 V100 H32 Z" fill="#2E3A94" clip-path="url(#sc-top)" />
+    <!-- Sombra escura sobre o furo -->
+    <rect id="sc-sombra" x="32" y="21" width="54" height="58" rx="10" fill="#212228" />
+  </g>
+  <!-- Filete claro em volta do furo -->
+  <rect id="sc-furo" x="32" y="29.5" width="58" height="60" rx="9" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="0.8" />
+  <!-- Filete claro da borda externa -->
+  <rect x="0.4" y="0.4" width="99.2" height="99.2" rx="15.6" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="0.8" />
+</svg>

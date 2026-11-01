@@ -6,12 +6,12 @@
   --bg-surface: #FAF7F0;
   --bg-elevated: #FFFFFF;
   --bg-recessed: #E7E1D3;
-  --bg-glass: rgba(243, 239, 230, 0.92);
+  --bg-glass: #FFFFFF;
 
   /* Tintas de Impressão (Hierarquia Tipográfica) */
   --ink-primary: #121417;
   --ink-secondary: #3B4049;
-  --ink-muted: #656B76;
+  --ink-muted: #5A606B;
   --ink-on-accent: #FFFFFF;
 
   /* Acentos de Produção Gráfica */
@@ -35,10 +35,10 @@
   --crop-mark-color: rgba(18, 20, 23, 0.42);
 
   /* Tipografia Autoral (Zero Inter / Plus Jakarta Sans) */
-  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
   --font-editorial: 'Instrument Serif', Georgia, serif;
-  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
 
   /* Escala Fluida com Contraste de Grande Formato */
   --text-xs: clamp(0.72rem, 0.69rem + 0.15vw, 0.78rem);
@@ -88,11 +88,11 @@ html[data-theme="dark"] {
   --bg-surface: #14171D;
   --bg-elevated: #1A1E26;
   --bg-recessed: #08090B;
-  --bg-glass: rgba(13, 15, 18, 0.92);
+  --bg-glass: #1A1E26;
 
   --ink-primary: #F3EFE6;
   --ink-secondary: #B4B9C4;
-  --ink-muted: #7E8594;
+  --ink-muted: #8A91A0;
   --ink-on-accent: #FFFFFF;
 
   --brand-red: #F0323E;
@@ -129,7 +129,8 @@ html {
   font-size: 16px;
   background-color: var(--bg-canvas);
   color: var(--ink-primary);
-  overflow-x: hidden;
+  /* clip corta a rolagem lateral sem quebrar position: sticky */
+  overflow-x: clip;
   max-width: 100vw;
 }
 
@@ -139,7 +140,8 @@ body {
   line-height: 1.58;
   background-color: var(--bg-canvas);
   color: var(--ink-primary);
-  overflow-x: hidden;
+  /* clip corta a rolagem lateral sem quebrar position: sticky */
+  overflow-x: clip;
   max-width: 100vw;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -214,13 +216,15 @@ textarea {
   caret-color: var(--brand-red);
 }
 
-/* Tabular Nums para dados técnicos, quantidades, gramaturas e telefones */
-.mono-num,
+/* Tabular Nums para dados numéricos alinhados; fonte de texto nos controles */
 input[type="number"],
-.spec-code,
-.sheet-coord,
 .qty-chip,
 .phone-num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
@@ -230,6 +234,11 @@ input[type="number"],
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0;
+}
+
+/* hidden sempre vence o display dos componentes (ex.: campo Cidade/UF) */
+[hidden] {
+  display: none !important;
 }
 
 :focus-visible {
