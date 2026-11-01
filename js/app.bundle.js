@@ -1716,11 +1716,50 @@ function initMarqueeHoverSpeed() {
   track.addEventListener('mouseleave', () => rampTo(1));
 }
 
+
+/**
+ * Como funciona: a linha vermelha acompanha a rolagem e acende cada passo.
+ * Movimento reduzido: linha cheia e todos os passos acesos, sem acompanhar a rolagem.
+ */
+function initHowTimeline() {
+  const list = document.getElementById('how-steps');
+  if (!list) return;
+  const steps = [...list.querySelectorAll('.how-step')];
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    list.style.setProperty('--how-progress', '1');
+    steps.forEach((s) => s.classList.add('is-reached'));
+    return;
+  }
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const rect = list.getBoundingClientRect();
+    const anchor = window.innerHeight * 0.6; // a linha "chega" a 60% da altura da tela
+    const progress = Math.min(1, Math.max(0, (anchor - rect.top) / rect.height));
+    list.style.setProperty('--how-progress', progress.toFixed(3));
+    steps.forEach((step) => {
+      step.classList.toggle('is-reached', step.getBoundingClientRect().top + 12 < anchor);
+    });
+  };
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+}
+
 function initApp() {
   initThemeSwitcher();
   initMobileMenu();
   initVerticalTabs();
   initMarqueeHoverSpeed();
+  initHowTimeline();
   renderCategoryPills();
   populateProductSelect();
   updateProductDependentFields(state.selectedProductId, false);

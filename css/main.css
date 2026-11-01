@@ -490,3 +490,138 @@
   line-height: 1.6;
   margin: 0;
 }
+
+/* ===== Como funciona: linha do tempo que preenche com a rolagem ===== */
+/* Fundo invertido (tinta vira fundo) para separar do catálogo e do orçamento, nos dois temas */
+.how-section {
+  background-color: var(--ink-primary);
+  color: var(--bg-canvas);
+  border-bottom: 0;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-10, 2.5rem);
+  align-items: start;
+}
+
+.how-intro {
+  position: sticky;
+  top: 7rem;
+}
+
+.how-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 1.6rem + 3.2vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.how-lead {
+  margin-top: 1.25rem;
+  max-width: 38ch;
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  opacity: 0.82;
+  text-wrap: pretty;
+}
+
+.how-link {
+  display: inline-block;
+  margin-top: 1.75rem;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--brand-red);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+}
+
+.how-link:hover,
+.how-link:focus-visible {
+  color: var(--brand-red);
+}
+
+/* Lista: trilho grosso à esquerda; --how-progress (0–1) vem do JS */
+.how-steps {
+  --how-progress: 1;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 2.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vh, 4.5rem);
+}
+
+.how-steps::before,
+.how-steps::after {
+  content: '';
+  position: absolute;
+  left: 0.55rem;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 6px;
+  border-radius: 3px;
+}
+
+.how-steps::before {
+  background: color-mix(in srgb, var(--bg-canvas) 18%, transparent);
+}
+
+.how-steps::after {
+  background: var(--brand-red);
+  transform-origin: top;
+  transform: scaleY(var(--how-progress));
+}
+
+.how-step {
+  position: relative;
+}
+
+/* Marcador: quadrado cheio sobre o trilho, acende quando a linha chega */
+.how-step::before {
+  content: '';
+  position: absolute;
+  left: -2.75rem;
+  top: 0.35rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 3px;
+  background: var(--ink-primary);
+  box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--bg-canvas) 35%, transparent);
+  transition: background-color 250ms ease, box-shadow 250ms ease;
+}
+
+.how-step.is-reached::before {
+  background: var(--brand-red);
+  box-shadow: inset 0 0 0 4px var(--brand-red);
+}
+
+.how-step__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.how-step p {
+  margin-top: 0.6rem;
+  max-width: 46ch;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  opacity: 0.82;
+}
+
+@media (max-width: 899px) {
+  .how-grid {
+    grid-template-columns: 1fr;
+  }
+  .how-intro {
+    position: static;
+  }
+}
