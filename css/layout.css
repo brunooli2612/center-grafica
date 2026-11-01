@@ -82,24 +82,13 @@
   }
 }
 
-/* Cabeçalho Principal */
+/* Cabeçalho Principal: mesma cor da hero e sem borda, sem desfoque */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 90;
-  background-color: var(--bg-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-hairline);
-}
-
-/* Menu sem barra no topo (referência Strata AI): mesma cor da hero e sem borda,
-   então emenda com ela. */
-.site-header {
   background-color: var(--bg-surface);
-  border-bottom-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
 }
 
 .site-header__inner {
@@ -184,7 +173,6 @@
   border-bottom: 1px solid var(--border-mid);
   padding: var(--space-4);
   gap: var(--space-3);
-  box-shadow: var(--shadow-sheet);
   z-index: 100;
 }
 
@@ -367,19 +355,6 @@
   max-width: 68ch;
 }
 
-.section-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--brand-red);
-  margin-bottom: 0.4rem;
-}
-
 .section-title {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
@@ -387,6 +362,7 @@
   line-height: 1.08;
   letter-spacing: -0.03em;
   color: var(--ink-primary);
+  text-wrap: balance;
 }
 
 .section-description {
@@ -474,18 +450,6 @@
   .quote-workspace > :last-child {
     position: sticky;
     top: 6rem;
-  }
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6);
-}
-
-@media (min-width: 860px) {
-  .features-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 

@@ -41,14 +41,12 @@
   }
 
   /* Depois do título: subtítulo, botões e selos assentam em sequência */
-  .hero-content .section-eyebrow,
   .hero-lead,
   .hero-cta-group,
   .hero-trust-pills {
     animation: heroSettle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  .hero-content .section-eyebrow { animation-delay: 0s; }
   .hero-lead { animation-delay: 0.62s; }
   .hero-cta-group { animation-delay: 0.74s; }
   .hero-trust-pills { animation-delay: 0.86s; }
@@ -103,7 +101,6 @@
   color: #FFFFFF;
   padding-inline: 0.32em;
   border-radius: var(--radius-sm);
-  box-shadow: 0 8px 20px -6px rgba(212, 25, 36, 0.45);
 }
 
 .hf-ticker-stack {
@@ -256,7 +253,7 @@
   height: 100%;
 }
 
-/* Cards de vidro sobre o 3D */
+/* Cards sobre o 3D: superfície opaca um tom acima do fundo (--bg-elevated sobre --bg-surface), sem blur nem sombra */
 .hero-stage-wrap {
   position: relative;
   width: 100%;
@@ -271,12 +268,9 @@
   gap: 0.2rem;
   padding: 0.75rem 1rem;
   max-width: 15rem;
-  background: color-mix(in srgb, var(--bg-surface) 62%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid color-mix(in srgb, var(--border-hairline) 80%, transparent);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-hairline);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sheet);
   pointer-events: none;
 }
 
@@ -291,10 +285,9 @@
 }
 
 .glass-card__label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-weight: 600;
   color: var(--ink-muted);
 }
 
@@ -447,48 +440,64 @@
   background-color: var(--brand-red);
 }
 
-/* Cards de Diferenciais */
-.feature-card {
-  background-color: var(--bg-elevated);
-  border: 1px solid var(--border-hairline);
-  border-radius: var(--radius-md);
-  padding: var(--space-6);
+/* ===== Diferenciais: lista editorial em linhas (título à esquerda, texto à direita) ===== */
+.features-header {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-10, 2.5rem);
+  align-items: end;
+  margin-bottom: var(--space-10);
+}
+
+.features-header .section-description {
+  max-width: 50ch;
+  text-wrap: pretty;
+}
+
+.features-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  box-shadow: var(--shadow-sheet);
 }
 
-.feature-card__icon {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: var(--radius-sm);
-  background-color: var(--brand-red-subtle);
-  color: var(--brand-red);
-  border: 1px solid rgba(212, 25, 36, 0.16);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.feature-row {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--space-10, 2.5rem);
+  align-items: baseline;
+  padding-block: clamp(1.75rem, 3.5vh, 2.75rem);
+  border-top: 1px solid var(--border-hairline);
 }
 
-.feature-card__icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.feature-card__title {
+.feature-row__title {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: clamp(1.45rem, 1.15rem + 1.1vw, 2rem);
   font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
   color: var(--ink-primary);
   margin: 0;
+  text-wrap: balance;
 }
 
-.feature-card__desc {
-  font-size: var(--text-sm);
+.feature-row__desc {
+  font-size: var(--text-base);
   color: var(--ink-secondary);
   line-height: 1.6;
+  max-width: 52ch;
   margin: 0;
+  text-wrap: pretty;
+}
+
+@media (max-width: 899px) {
+  .features-header,
+  .feature-row {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .feature-row {
+    padding-block: 1.5rem;
+  }
 }
 
 /* ===== Como funciona: linha do tempo que preenche com a rolagem ===== */

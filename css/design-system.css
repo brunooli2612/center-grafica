@@ -6,7 +6,7 @@
   --bg-surface: #FAF7F0;
   --bg-elevated: #FFFFFF;
   --bg-recessed: #E7E1D3;
-  --bg-glass: rgba(243, 239, 230, 0.92);
+  --bg-glass: #FFFFFF;
 
   /* Tintas de Impressão (Hierarquia Tipográfica) */
   --ink-primary: #121417;
@@ -88,7 +88,7 @@ html[data-theme="dark"] {
   --bg-surface: #14171D;
   --bg-elevated: #1A1E26;
   --bg-recessed: #08090B;
-  --bg-glass: rgba(13, 15, 18, 0.92);
+  --bg-glass: #1A1E26;
 
   --ink-primary: #F3EFE6;
   --ink-secondary: #B4B9C4;
@@ -216,13 +216,15 @@ textarea {
   caret-color: var(--brand-red);
 }
 
-/* Tabular Nums para dados técnicos, quantidades, gramaturas e telefones */
-.mono-num,
+/* Tabular Nums para dados numéricos alinhados; fonte de texto nos controles */
 input[type="number"],
-.spec-code,
-.sheet-coord,
 .qty-chip,
 .phone-num {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+}
+
+.mono-num {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }

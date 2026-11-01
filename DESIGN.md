@@ -33,8 +33,8 @@ Implementado em `css/main.css` e `js/main.js` (`initOpenMontageMotion`) seguindo
 
 ## 3. Tipografia e Paleta OKLCH
 - **Display:** `Bricolage Grotesque` (700/800)
-- **UI & Leitura:** `Plus Jakarta Sans` (400/500/600/700)
-- **Dados Numéricos:** `JetBrains Mono` (`font-variant-numeric: tabular-nums`)
+- **UI & Leitura:** `Plus Jakarta Sans` (400/500/600/700) — usada também em rótulos, legendas, botões de quantidade e metadados (`tabular-nums` para números).
+- **Dados Numéricos:** `JetBrains Mono` (`font-variant-numeric: tabular-nums`) restrita apenas a números alinhados em coluna se necessário; nunca usada como "voz técnica" decorativa em micro-rótulos ou legendas.
 - **Superfícies:** Papel Offset Alvo (`oklch(98.5% 0.004 85)`) no tema claro e Carbono Editorial (`oklch(15% 0.012 260)`) no tema escuro, com Vermelho Carmim Center (`#E31E24` / `oklch(54% 0.22 27)`).
 
 ## 4. Diretrizes Visuais & Backlog de Melhorias (Referência: Refero Styles)
@@ -46,15 +46,17 @@ Orientações de design curadas a partir de benchmarks industriais de alto padr�
    - O vermelho Center (`#E31E24`) atua como acento cromático deliberado e exclusivo para CTAs e conversão.
    - Exceção decidida pelo Bruno (31/10/2026): o botão que envia o orçamento pelo WhatsApp fica verde (`--whatsapp-green`), porque é a cor que o cliente reconhece como WhatsApp. Na seção de orçamento ele é a única ação cheia; o link do resumo é secundário.
 
-2. **Estética de Catálogo Industrial Hairline:**
-   - Divisores e bordas estruturais em hairline sutil (`1px solid var(--border-subtle)` / `#E5E5E5`), eliminando sombras pesadas ou gradientes poluídos.
+2. **Superfícies por Tom e Sem Sombras Decorativas:**
+   - Divisores e bordas estruturais sutis (`1px solid var(--border-hairline)`), sem sombras suaves decorativas (`box-shadow`) nos cards nem `backdrop-filter` (vidro borrado). A separação entre blocos é feita por degrau de tom de fundo (`--bg-elevated` sobre `--bg-surface`, ou `--bg-surface` sobre `--bg-canvas`) e espaço.
    - O produto físico (sacolas kraft, caixas, adesivagem, impressos) é o único elemento denso e em foco na página; a interface atua como moldura de precisão.
 
 3. **Geometria Arquitetural e Cantos Refinados:**
    - Manter `border-radius` entre `4px` e `6px` para botões, inputs, chips de filtro e cards (evitando pílulas arredondadas genéricas para transmitir precisão milimétrica de corte e guilhotina).
 
-4. **Micro-tipografia Técnica em Metadados:**
-   - Gramaturas (`300g`), tiragens (`Min: 100 un`), dimensões e acabamentos sempre estilizados em `JetBrains Mono`, 11–12px, caixa alta com tracking alargado (`letter-spacing: +0.05em`).
+4. **Rótulos e Metadados em Fonte de Texto (Zero Tells de IA):**
+   - Sem `.section-eyebrow` (rótulos pequenos em mono, caixa alta e tracking largo acima de títulos) e sem numeração decorativa (`/01`..`/04`). Quando a informação do rótulo é útil (ex.: "sem cadastro", "em Teresina"), ela entra na frase de apoio.
+   - Rótulos, clientes, tiragens e metadados usam `Plus Jakarta Sans` em caixa normal (sentence case) e tamanho legível.
+   - A seção `#diferenciais` usa composição em linhas editoriais (título à esquerda e descrição à direita), sem cards repetidos com ícone em quadradinho.
 
 5. **Amostras Táteis de Acabamentos:**
    - Apresentação visual limpa dos acabamentos nobres (*Verniz Localizado*, *Hot Stamping*, *Soft Touch*, *Corte Especial*) em formato de galeria/amostras táteis diretas.
@@ -83,7 +85,7 @@ Orientações de design curadas a partir de benchmarks industriais de alto padr�
    - Substituir os blocos amontoados por um showcase flutuante e arejado dos produtos físicos reais da Center Gráfica (sacolas nobres, caixas rígidas, agendas e frotas) com leve inclinação 3D tátil e brilho sutil.
    - **Elemento Escultural 3D (Logo Center Gráfica Levitando):** A logo oficial (`logo-center.svg`) flutuando na direita com física de onda senoidal suave e reação Parallax ao cursor do mouse.
      - *Referência técnica:* `img2threejs/img2threejs` (geometria procedural Three.js leve) OU SVG CSS 3D com `perspective: 1000px` (zero dependências, 60fps até em celulares básicos).
-   - Dois cards translúcidos de acabamento sobrepostos: *"Acabamentos Nobres: Verniz UV & Hot Stamping"* e *"Parque Offset: Escala e Custo Unitário"*.
+   - Dois cards de apoio sobrepostos (`.glass-card`): superfície opaca um tom acima do fundo da hero (`--bg-elevated` sobre `--bg-surface`), sem `backdrop-filter` e sem sombra decorativa, mantendo o conteúdo de produção própria e balcão em Teresina / envio nacional.
 
 5. **Eliminação Total da Poluição Visual:**
    - Manter zero jargões internos, zero tabelas técnicas estáticas visíveis no primeiro impacto e zero bordas pesadas. Menos é mais: produto físico em foco com moldura editorial de alta precisão.

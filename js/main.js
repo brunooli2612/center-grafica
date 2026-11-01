@@ -986,24 +986,6 @@ function initOpenMontageMotion() {
 
   // 5. Faixa de especialidades: loop em CSS (@keyframes hf-marquee-scroll).
   //    A velocidade no hover é controlada por initMarqueeHoverSpeed(), fora deste bloco.
-
-  // 6. ScrollTrigger suave para seções ao rolar a página
-  if (window.ScrollTrigger) {
-    gsap.utils.toArray('.portfolio-card, .feature-card').forEach((card, i) => {
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 90%',
-          toggleActions: 'play none none none'
-        },
-        y: 24,
-        opacity: 0,
-        duration: 0.55,
-        delay: (i % 4) * 0.07,
-        ease: 'power2.out'
-      });
-    });
-  }
 }
 
 /**
