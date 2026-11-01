@@ -916,9 +916,24 @@ function initVerticalSpringTicker() {
   function advance() {
     if (isCycling) return;
     const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Movimento reduzido: o ticker fica parado no primeiro item
-    if (isReduced) return;
     const slotHeight = items[0].getBoundingClientRect().height || 54;
+
+    // Movimento reduzido: troca a palavra só esmaecendo, sem deslizar
+    if (isReduced) {
+      isCycling = true;
+      tickerStack.style.transition = 'opacity 300ms ease';
+      tickerStack.style.opacity = '0';
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % stepCount; // pula o clone do fim
+        tickerStack.style.transition = 'none';
+        tickerStack.style.transform = `translateY(-${currentIndex * slotHeight}px)`;
+        void tickerStack.offsetHeight;
+        tickerStack.style.transition = 'opacity 300ms ease';
+        tickerStack.style.opacity = '1';
+        isCycling = false;
+      }, 320);
+      return;
+    }
     currentIndex++;
 
     // Curva física OpenMontage: back.out(1.7) overshoot com cubic-bezier
