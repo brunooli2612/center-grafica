@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/nav-menu.css" />
     <link rel="stylesheet" href="css/prensa.css" />
 
     <!-- Schema.org LocalBusiness & FAQPage -->
@@ -155,11 +156,43 @@
         </a>
 
         <nav class="primary-nav" id="primary-nav" aria-label="Navegação Principal">
-          <a href="#trabalhos" class="nav-link">Trabalhos Reais</a>
-          <a href="#catalogo" class="nav-link">Catálogo</a>
+          <!-- Menu com painéis (js/nav-menu.js): no desktop abre por cima; no celular os painéis viram listas -->
+          <div class="nav-item" data-nav-item>
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="nav-panel-catalogo" id="nav-trigger-catalogo">
+              Catálogo
+              <svg class="nav-trigger__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="nav-panel nav-panel--catalogo" id="nav-panel-catalogo" role="region" aria-labelledby="nav-trigger-catalogo">
+              <a href="#catalogo" class="nav-feature" data-nav-category="todos">
+                <img class="nav-feature__mark" src="assets/images/simbolo-center.svg" alt="" width="40" height="40" />
+                <span class="nav-feature__title">Catálogo completo</span>
+                <span class="nav-feature__text">Escolha o material e orce na hora pelo simulador.</span>
+              </a>
+              <ul class="nav-list">
+                <li><a href="#catalogo" class="nav-list__link" data-nav-category="embalagens"><span class="nav-list__title">Sacolas &amp; Embalagens</span><span class="nav-list__text">Sacolas personalizadas, caixas e embalagens sob medida.</span></a></li>
+                <li><a href="#catalogo" class="nav-list__link" data-nav-category="comunicacao-visual"><span class="nav-list__title">Frotas &amp; Lonas</span><span class="nav-list__text">Adesivagem de frotas, lonas, banners e vitrines.</span></a></li>
+                <li><a href="#catalogo" class="nav-list__link" data-nav-category="brindes-corporativos"><span class="nav-list__title">Agendas &amp; Papelaria</span><span class="nav-list__text">Cadernos, agendas, pastas, blocos e receituários.</span></a></li>
+                <li><a href="#catalogo" class="nav-list__link" data-nav-category="offset-digital"><span class="nav-list__title">Cartões, Rótulos &amp; Panfletos</span><span class="nav-list__text">Cartões de visita, tags, rótulos, folders e revistas.</span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="nav-item" data-nav-item>
+            <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="nav-panel-grafica" id="nav-trigger-grafica">
+              A gráfica
+              <svg class="nav-trigger__chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="nav-panel nav-panel--grafica" id="nav-panel-grafica" role="region" aria-labelledby="nav-trigger-grafica">
+              <ul class="nav-list nav-list--grid">
+                <li><a href="#trabalhos" class="nav-list__link"><span class="nav-list__title">Trabalhos reais</span><span class="nav-list__text">O que já produzimos para empresas como a sua.</span></a></li>
+                <li><a href="#como-fazemos" class="nav-list__link"><span class="nav-list__title">Como fazemos</span><span class="nav-list__text">Da prensa offset à sacola pronta, passo a passo.</span></a></li>
+                <li><a href="#diferenciais" class="nav-list__link"><span class="nav-list__title">Diferenciais</span><span class="nav-list__text">Maquinário próprio em Teresina-PI e atendimento ágil.</span></a></li>
+                <li><a href="#contato" class="nav-list__link"><span class="nav-list__title">Onde estamos</span><span class="nav-list__text">Endereço, retirada e todos os nossos contatos.</span></a></li>
+              </ul>
+            </div>
+          </div>
           <a href="#orcamento" class="nav-link">Orçamento Rápido</a>
-          <a href="#diferenciais" class="nav-link">Diferenciais</a>
           <a href="#contato" class="nav-link">Contato</a>
+          <div class="nav-viewport" aria-hidden="true"></div>
 
           <div class="primary-nav__mobile-actions">
             <div class="theme-switcher theme-switcher--mobile" role="radiogroup" aria-label="Alternar tema de cores">
@@ -1056,5 +1089,6 @@ Aguardo o retorno com valores e prazo de produção. Obrigado!</pre>
     <script type="module" src="js/logo-3d.js"></script>
     <script src="js/revisao.js" defer></script>
     <script src="js/prensa-embed.js" defer></script>
+    <script src="js/nav-menu.js" defer></script>
   </body>
 </html>
