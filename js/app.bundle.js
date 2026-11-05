@@ -194,7 +194,7 @@ const PRIMARY_WHATSAPP_NUMBER = '5586988545141';const PRIMARY_WHATSAPP_DISPLAY 
   {
     id: 'case-frotas-strada',
     title: 'Personalização de Frota Comercial',
-    client: 'Frota Fiat Strada',
+    client: 'Frota comercial',
     category: 'Comunicação Visual',
     substrate: 'Vinil automotivo com proteção solar UV',
     image: 'assets/images/portfolio-frotas.webp',

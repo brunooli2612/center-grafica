@@ -198,7 +198,7 @@ export const PORTFOLIO_ITEMS = [
   {
     id: 'case-frotas-strada',
     title: 'Personalização de Frota Comercial',
-    client: 'Frota Fiat Strada',
+    client: 'Frota comercial',
     category: 'Comunicação Visual',
     substrate: 'Vinil automotivo com proteção solar UV',
     image: 'assets/images/portfolio-frotas.webp',
