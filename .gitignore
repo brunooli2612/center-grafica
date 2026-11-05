@@ -39,3 +39,6 @@ Desktop.ini
 # Knowledge graph and temporary tool outputs
 graphify-out/
 .system_generated/
+
+# Saida do build do teardown (prensa)
+teardown-out/

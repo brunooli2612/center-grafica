@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Prensa Offset no Site ("Como fazemos") — Heidelberg GTO 52 Sim Integration
+   ========================================================================== */
+
+#como-fazemos {
+  position: relative;
+  /* tour (0-0.66) + flight + landing + fold: see the scroll budget in js/prensa-embed.js */
+  height: 560vh;
+  background-color: var(--bg-canvas, #F3EFE6);
+  color: var(--ink-primary, #121417);
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  #como-fazemos {
+    height: 460vh;
+  }
+}
+
+.prensa-sticky-wrap {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.prensa-media-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.prensa-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.prensa-iframe.is-ready {
+  opacity: 1;
+}
+
+.prensa-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.35s ease;
+}
+
+.prensa-poster.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Landing on the bench and the fold clip (driven by js/prensa-embed.js) */
+.prensa-bench {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.prensa-bench__clip {
+  /* size and place set per frame by js/prensa-embed.js (landing scale -> cover) */
+  max-width: none;
+  max-height: none;
+  position: absolute;
+  object-fit: fill;
+  opacity: 0;
+  box-shadow: 0 10px 30px rgba(18, 20, 23, 0.12);
+}
+
+.prensa-bench__sheet {
+  /* the transform maps a fixed 1000 px box: the site's img { max-width: 100% } would shrink it on phones */
+  max-width: none;
+  max-height: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Header: Section Title and Lead */
+.prensa-header::before {
+  /* a paper-coloured wash behind the text, so the title stays readable over the press */
+  content: '';
+  position: absolute;
+  inset: -2.5rem -4rem -2.5rem -6rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, var(--bg-canvas, #F3EFE6) 55%, transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--bg-canvas, #F3EFE6) 92%, transparent) 55%, transparent);
+  pointer-events: none;
+}
+
+.prensa-header {
+  position: absolute;
+  /* below the floating site nav */
+  top: clamp(5.5rem, 11vh, 7.5rem);
+  left: clamp(1.25rem, 4vw, 3.5rem);
+  right: clamp(1.25rem, 4vw, 3.5rem);
+  max-width: 680px;
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.prensa-title {
+  font-family: var(--font-display, 'Bricolage Grotesque', sans-serif);
+  font-size: var(--text-2xl, clamp(1.85rem, 1.5rem + 1.4vw, 2.75rem));
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ink-primary, #121417);
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
+}
+
+.prensa-lead {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: var(--text-base, 1rem);
+  line-height: 1.5;
+  color: var(--ink-secondary, #3B4049);
+  margin: 0;
+}
+
+/* Captions overlay: step-by-step technical explanation */
+.prensa-captions {
+  position: absolute;
+  bottom: clamp(1.5rem, 4vh, 3.5rem);
+  left: clamp(1.25rem, 4vw, 3.5rem);
+  /* the items are absolutely positioned, so the list needs its own width */
+  width: min(520px, calc(100% - 2.5rem));
+  z-index: 3;
+  pointer-events: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .prensa-captions {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1.25rem;
+    width: auto;
+    max-width: none;
+  }
+}
+
+.prensa-caption-item {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
+  background: var(--bg-surface, #FAF7F0);
+  background: color-mix(in srgb, var(--bg-surface, #FAF7F0) 90%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-hairline, #CFC8B8);
+  border-radius: var(--radius-sm, 3px);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.prensa-caption-item.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.prensa-caption-text {
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: var(--text-base, 1rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink-primary, #121417);
+  margin: 0;
+}
+
+/* Reduced Motion Mode (Accessible static layout) */
+@media (prefers-reduced-motion: reduce) {
+  #como-fazemos {
+    height: auto !important;
+    padding: clamp(3rem, 6vh, 5rem) 1.5rem !important;
+  }
+
+  .prensa-sticky-wrap {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .prensa-header {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    max-width: none !important;
+    margin-bottom: 2rem;
+  }
+
+  .prensa-media-container {
+    position: relative !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    width: 100% !important;
+    border-radius: var(--radius-md, 4px);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .prensa-iframe {
+    display: none !important;
+  }
+
+  .prensa-poster {
+    position: relative !important;
+    opacity: 1 !important;
+    display: block !important;
+  }
+
+  .prensa-captions {
+    position: static !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+
+  .prensa-caption-item {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    width: 100% !important;
+  }
+}
