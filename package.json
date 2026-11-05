@@ -4,6 +4,7 @@
   "description": "Site institucional e gerador de orcamentos da Center Grafica (Teresina-PI / Brasil)",
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "test": "node --test tests/*.test.js"
   },
   "private": true
