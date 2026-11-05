@@ -101,8 +101,14 @@
     const h = w / ART_ASPECT;
     return { x: (W - w) / 2, y: H * 0.5 - h / 2, w, h };
   };
-  // corners of the flat sheet in the clip's first frame (TL, TR, BR, BL), measured on the 1890 x 1080 file
-  const CLIP = { w: 1890, h: 1080, quad: [[340, 406], [1749, 502], [1808, 947], [71, 808]] };
+  // Portrait phones get the vertical fold (dobra-m.mp4, 720 x 1280); everything else the 16:9 one.
+  const mobileClip = window.matchMedia('(max-width: 860px) and (orientation: portrait)').matches;
+  // Where the art's corners (TL, TR, BR, BL of folha-sacola.webp) sit in the clip's first frame, in file px.
+  // `turn`: the vertical clip has the sheet lying lengthwise into the depth, a quarter turn from the art, so
+  // the landing also turns it (see updateBench).
+  const CLIP = mobileClip
+    ? { w: 720, h: 1280, quad: [[31, 1090], [153, 481], [579, 485], [700, 1094]], turn: Math.PI / 2 }
+    : { w: 1890, h: 1080, quad: [[340, 406], [1749, 502], [1808, 947], [71, 808]], turn: 0 };
 
   const K = FLY0 / 0.84;
   const RANGES = [
@@ -145,7 +151,6 @@
   }
 
   // 5. Landing on the bench and the fold
-  const mobileClip = window.matchMedia('(max-width: 860px)').matches;
   const mediaBox = section.querySelector('.prensa-media-container');
   const bench = document.createElement('div');
   bench.className = 'prensa-bench';
@@ -189,7 +194,8 @@
   // The clip is laid out by hand: centred, at scale s (file px -> CSS px). It lands small enough that the whole
   // sheet is on screen (a photo on the paper; on a phone that is far below cover, which would show a third of the
   // sheet), then grows to cover the screen while the bag folds.
-  const SHEET_SPAN = CLIP.quad[2][0] - CLIP.quad[3][0]; // widest extent of the sheet in the file
+  const quadXs = CLIP.quad.map(([x]) => x);
+  const SHEET_SPAN = Math.max(...quadXs) - Math.min(...quadXs); // widest extent of the sheet in the file
   const clipScales = (W, H) => {
     const cover = Math.max(W / CLIP.w, H / CLIP.h);
     return { land: Math.min(cover, (W * 0.94) / SHEET_SPAN, (H * 0.9) / CLIP.h), cover };
@@ -239,7 +245,11 @@
     const from = [[R.x, R.y], [R.x + R.w, R.y], [R.x + R.w, R.y + R.h], [R.x, R.y + R.h]];
     const to = clipQuadAt(W, H, S.land);
     const k = ease(clamp01((p - FLY1) / (LAND - FLY1)));
-    const q = from.map(([x, y], i) => [x + (to[i][0] - x) * k, y + (to[i][1] - y) * k]);
+    // a quarter-turn landing spins the rectangle about its centre as it goes, so the corners never cross
+    const cx = R.x + R.w / 2, cy = R.y + R.h / 2;
+    const t = CLIP.turn * k, cos = Math.cos(t), sin = Math.sin(t);
+    const spun = from.map(([x, y]) => [cx + (x - cx) * cos + (y - cy) * sin, cy - (x - cx) * sin + (y - cy) * cos]);
+    const q = spun.map(([x, y], i) => [x + (to[i][0] - x) * k, y + (to[i][1] - y) * k]);
     sheet.style.transform = boxToQuad(SHEET_W, SHEET_W / ART_ASPECT, q);
     // Only once the sheet has landed does the bench appear, around it: the <img> is that frame's own sheet, so
     // nothing doubles. Then the <img> hands over to the clip, which grows to cover while the bag folds.
