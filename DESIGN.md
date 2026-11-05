@@ -27,7 +27,7 @@
 Implementado em `css/main.css` e `js/main.js` (`initOpenMontageMotion`) seguindo 5 receitas oficiais do OpenMontage:
 1. **`vertical-spring-ticker` (`#hf-ticker-stack`):** Slot-machine vertical no título principal alternando entre *Sacolas Personalizadas*, *Envelopamento de Frotas*, *Agendas Corporativas*, *Caixas & Embalagens* e *Impressão Offset & Digital* com física elástica `back.out(1.7)`.
 2. **`css-marker-patterns` (`#hf-scribble-path`):** Sublinhado manuscrito em SVG desenhado dinamicamente sob *"todo o Brasil"* (`stroke-dashoffset` animado com `power2.inOut`).
-3. **`split-tilt-cards` + `sine-wave-loop` (`.hf-showcase-card`):** Grade 3D no Hero com entrada lateral oposta (`rotateY: ±7deg`) e flutuação contínua em contra-fase (`Math.sin(phase + i * Math.PI / 2)`), exibindo os 4 produtos reais da gráfica.
+3. **`split-tilt-cards` + `sine-wave-loop` (`.hf-showcase-card`):** Grade 3D no Hero com entrada lateral oposta (`rotateY: ±7deg`) e flutuação contínua em contra-fase (`Math.sin(phase + i * Math.PI / 2)`), exibindo os 4 produtos reais da gráfica. *(Removido em 31/10/2026: o símbolo 3D ocupa a coluna direita da hero; as fotos ficaram na seção Trabalhos Reais.)*
 4. **`press-release-spring` (`triggerPressSpring`):** Compressão rápida (`scale: 0.92`, `0.12s`, `power1.in`) seguida de soltura elástica (`scale: 1`, `0.45s`, `back.out(2.0)`) e pulso de brilho radial (`#hero-cta-glow`).
 5. **Faixa Contínua Marquee (`#hf-marquee-track`) & ScrollTrigger:** Movimento horizontal contínuo entre o Hero e o Portfólio e revelação escalonada dos cards na rolagem.
 
@@ -83,7 +83,7 @@ Orientações de design curadas a partir de benchmarks industriais de alto padr�
 
 4. **Showcase Central de Produto Físico (Right Half Artwork):**
    - Substituir os blocos amontoados por um showcase flutuante e arejado dos produtos físicos reais da Center Gráfica (sacolas nobres, caixas rígidas, agendas e frotas) com leve inclinação 3D tátil e brilho sutil.
-   - **Elemento Escultural 3D (Logo Center Gráfica Levitando):** A logo oficial (`logo-center.svg`) flutuando na direita com física de onda senoidal suave e reação Parallax ao cursor do mouse.
+   - **Elemento Escultural 3D (Logo Center Gráfica Levitando):** O símbolo redesenhado (`assets/images/simbolo-center.svg`; `logo-center.svg` é placeholder e não deve ser usado) flutuando na direita com física de onda senoidal suave e reação Parallax ao cursor do mouse.
      - *Referência técnica:* `img2threejs/img2threejs` (geometria procedural Three.js leve) OU SVG CSS 3D com `perspective: 1000px` (zero dependências, 60fps até em celulares básicos).
    - Dois cards de apoio sobrepostos (`.glass-card`): superfície opaca um tom acima do fundo da hero (`--bg-elevated` sobre `--bg-surface`), sem `backdrop-filter` e sem sombra decorativa, mantendo o conteúdo de produção própria e balcão em Teresina / envio nacional.
 

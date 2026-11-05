@@ -1,0 +1,10 @@
+scrollcraft/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.svg
+*.mp4
+package-lock.json
+js/app.bundle.js
+*.skill

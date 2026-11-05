@@ -44,6 +44,8 @@ O site funciona como uma **vitrine de autoridade + pré-vendedor técnico automa
 ## 3. Arquitetura de UX, UI e Design System (`agency-ux-architect` & `agency-ui-designer`)
 
 ### Paleta de Cores (Extraída da Identidade `@centergrafica`)
+> **Substituída:** a paleta em vigor é a do `DESIGN.md` §3 (Vermelho Carmim Center `#E31E24` como acento, verde só no botão do WhatsApp). A lista abaixo é a proposta original de 25/10/2026.
+
 - **Primary (Center Royal Blue):** `#0044CC` / `#0055FF` (inspirado no fundo institucional e nos posts da marca)
 - **Accent (CMYK Magenta):** `#E6007E` (inspirado nos posts de destaque de frotas e selos de ação)
 - **Cyan Print:** `#00B4D8` (apoio visual CMYK)

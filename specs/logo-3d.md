@@ -60,6 +60,6 @@ Peças extrudadas, de trás para frente:
 
 ## Pendências
 
-- Integração na hero (`index.html`, coluna direita, hoje ocupada pelo carrossel de amostras).
+- ~~Integração na hero~~: feita em 31/10/2026 (`#logo-3d-stage` em `index.html`, coluna direita, no lugar do carrossel). As restrições das seções acima valiam para a primeira entrega isolada.
 - Fallback sem WebGL não testado no navegador.
 - Trocar pelo vetor original da gráfica se a Simone ou o Itamar tiverem o arquivo.
