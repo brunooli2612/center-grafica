@@ -158,6 +158,33 @@ export async function runSite() {
   const quat0 = new THREE.Quaternion().setFromRotationMatrix(rotMat0);
 
 
+  // The studio backdrop follows the page theme: the stage's light gradient as built, or the same kind of
+  // gradient around the page's dark background (lighter at the top, the page colour at the bottom).
+  const lightBackdrop = stage.scene.background;
+  let darkBackdrop = null;
+  function backdropFor(bg) {
+    const base = new THREE.Color(bg);
+    const hsl = {};
+    base.getHSL(hsl);
+    if (hsl.l >= 0.5) return lightBackdrop;
+    if (darkBackdrop && darkBackdrop.userData.bg === bg) return darkBackdrop;
+    const c = document.createElement('canvas');
+    c.width = 4;
+    c.height = 512;
+    const g = c.getContext('2d');
+    const gr = g.createLinearGradient(0, 0, 0, 512);
+    gr.addColorStop(0, '#' + base.clone().lerp(new THREE.Color('#ffffff'), 0.07).getHexString());
+    gr.addColorStop(0.55, '#' + base.clone().lerp(new THREE.Color('#ffffff'), 0.03).getHexString());
+    gr.addColorStop(1, '#' + base.getHexString());
+    g.fillStyle = gr;
+    g.fillRect(0, 0, 4, 512);
+    if (darkBackdrop) darkBackdrop.dispose();
+    darkBackdrop = new THREE.CanvasTexture(c);
+    darkBackdrop.colorSpace = THREE.SRGBColorSpace;
+    darkBackdrop.userData.bg = bg;
+    return darkBackdrop;
+  }
+
   function updateTheme(colors) {
     if (colors.bg) {
       themeColors.bg = colors.bg;
@@ -168,6 +195,8 @@ export async function runSite() {
 
   // ------------------------------------------------------------ Frame Rendering
   function renderFrame(p, currentTh) {
+    // re-asserted every frame (cached, so cheap): a theme that arrives during start-up must not be lost
+    stage.scene.background = backdropFor(themeColors.bg);
     // Determine active faixa
     let idx = 0;
     for (let i = 0; i < FAIXAS.length; i++) {

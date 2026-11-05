@@ -120,7 +120,8 @@
     { min: 0.62, max: 0.72, idx: 5 },
     { min: 0.72, max: 0.88, idx: 6 },
   ].map((r) => ({ ...r, min: r.min * K, max: r.max * K }));
-  RANGES.push({ min: 0.76, max: 1.01, idx: 7 });
+  // the last caption takes over right where the press's last one ends, so the flight never runs captionless
+  RANGES.push({ min: RANGES[RANGES.length - 1].max, max: 1.01, idx: 7 });
 
   let currentCaptionIdx = -1;
   function updateCaptions(p) {
@@ -169,12 +170,17 @@
   let clipTarget = 0;
   let clipSeeking = false;
   let clipLoading = false;
+  let clipTries = 0;
   function loadClip() {
-    if (clipLoading) return;
+    if (clipLoading || clipTries >= 2) return;
     clipLoading = true;
+    clipTries++;
     // a blob seeks instantly; the files carry a keyframe every 4-8 frames for smooth scrubbing
     fetch(mobileClip ? 'assets/prensa/dobra-m.mp4' : 'assets/prensa/dobra.mp4')
-      .then((r) => r.blob())
+      .then((r) => {
+        if (!r.ok) throw new Error(r.status);
+        return r.blob();
+      })
       .then((b) => {
         clip.src = URL.createObjectURL(b);
         clip.addEventListener('loadeddata', () => { clipDur = clip.duration; seekClip(); }, { once: true });
@@ -254,11 +260,19 @@
     // Only once the sheet has landed does the bench appear, around it: the <img> is that frame's own sheet, so
     // nothing doubles. Then the <img> hands over to the clip, which grows to cover while the bag folds.
     const IN0 = LAND, IN1 = LAND + 0.012, OUT1 = LAND + 0.02, GROW1 = LAND + 0.09;
+    // Plan B: while the clip is not playable (still loading, or it failed), the landed sheet simply stays
+    if (!clipDur) {
+      clip.style.opacity = '0';
+      sheet.style.opacity = '1';
+      return;
+    }
     clip.style.opacity = clamp01((p - IN0) / (IN1 - IN0)).toFixed(3);
     sheet.style.opacity = (1 - clamp01((p - IN1) / (OUT1 - IN1))).toFixed(3);
     const g = ease(clamp01((p - OUT1) / (GROW1 - OUT1)));
     placeClip(W, H, S.land + (S.cover - S.land) * g, 14 * (1 - g));
     clipTarget = clamp01((p - OUT1) / (FOLD - OUT1)) * clipDur;
+    // once the bag holds, the bench's foot melts into the page colour, so the next section does not cut it dry
+    bench.style.setProperty('--seam', clamp01((p - FOLD) / (1 - FOLD)).toFixed(3));
     seekClip();
   }
 

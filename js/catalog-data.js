@@ -191,7 +191,7 @@ export const PORTFOLIO_ITEMS = [
     client: 'Telego.net',
     category: 'Embalagens',
     substrate: 'Papel Offset 240g com ilhós e alça cordão',
-    image: 'assets/images/portfolio-sacolas.png',
+    image: 'assets/images/portfolio-sacolas.webp',
     description: 'Impressão frente e verso com cores sólidas, acabamento laminado e reforço estrutural.',
     productRef: 'sacola-personalizada'
   },
@@ -201,7 +201,7 @@ export const PORTFOLIO_ITEMS = [
     client: 'Frota Fiat Strada',
     category: 'Comunicação Visual',
     substrate: 'Vinil automotivo com proteção solar UV',
-    image: 'assets/images/portfolio-frotas.png',
+    image: 'assets/images/portfolio-frotas.webp',
     description: 'Adesivagem de picapes comerciais com recorte eletrônico e QR Code integrado.',
     productRef: 'personalizacao-frotas'
   },
@@ -211,7 +211,7 @@ export const PORTFOLIO_ITEMS = [
     client: 'Linha Executiva Center',
     category: 'Brindes & Papelaria',
     substrate: 'Capa dura laminada + encadernação Wire-o',
-    image: 'assets/images/portfolio-agendas.png',
+    image: 'assets/images/portfolio-agendas.webp',
     description: 'Agendas personalizadas para empresas, clínicas e kits de fim de ano.',
     productRef: 'cadernos-agendas-corporativas'
   },
@@ -221,7 +221,7 @@ export const PORTFOLIO_ITEMS = [
     client: 'Terrasco',
     category: 'Brindes & Papelaria',
     substrate: 'Capa dura revestida + garra Wire-o preta',
-    image: 'assets/images/portfolio-terrasco.png',
+    image: 'assets/images/portfolio-terrasco.webp',
     description: 'Acabamento sofisticado em tom carmim com grafismo e marca em destaque.',
     productRef: 'cadernos-agendas-corporativas'
   }

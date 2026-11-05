@@ -5,7 +5,7 @@
 #como-fazemos {
   position: relative;
   /* tour (0-0.66) + flight + landing + fold: see the scroll budget in js/prensa-embed.js */
-  height: 560vh;
+  height: 420vh;
   background-color: var(--bg-canvas, #F3EFE6);
   color: var(--ink-primary, #121417);
   box-sizing: border-box;
@@ -13,7 +13,7 @@
 
 @media (max-width: 768px), (pointer: coarse) {
   #como-fazemos {
-    height: 460vh;
+    height: 400vh;
   }
 }
 
@@ -77,6 +77,19 @@
   pointer-events: none;
   overflow: hidden;
   z-index: 2;
+}
+
+/* the seam into the next section: fades in after the fold (--seam set by js/prensa-embed.js) */
+.prensa-bench::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24vh;
+  background: linear-gradient(to bottom, transparent, var(--bg-canvas, #F3EFE6) 85%);
+  opacity: var(--seam, 0);
+  z-index: 1;
 }
 
 .prensa-bench__clip {
