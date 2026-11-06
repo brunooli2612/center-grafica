@@ -1401,6 +1401,63 @@ function initVerticalSpringTicker() {
   });
 }
 
+// Títulos das seções sobem linha a linha ao aparecer (mesmo gesto do título da capa).
+// Roda depois que a página assentou. Título já na tela ou acima dela fica como está.
+function initSectionTitleReveal(gsap) {
+  const SplitText = window.SplitText;
+  if (!SplitText || !('IntersectionObserver' in window)) return;
+  gsap.registerPlugin(SplitText);
+
+  const HEADINGS = ['portfolio-heading', 'catalog-heading', 'how-heading', 'quote-heading', 'features-heading'];
+
+  const start = () => {
+    const pending = new Map();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const split = pending.get(entry.target);
+          observer.unobserve(entry.target);
+          pending.delete(entry.target);
+          gsap.to(split.lines, {
+            yPercent: 0,
+            duration: 0.9,
+            ease: 'expo.out',
+            stagger: 0.09,
+            onComplete: () => split.revert()
+          });
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px' }
+    );
+
+    HEADINGS.forEach((id) => {
+      const heading = document.getElementById(id);
+      if (!heading || heading.getBoundingClientRect().top < window.innerHeight) return;
+      const split = SplitText.create(heading, { type: 'lines', mask: 'lines' });
+      gsap.set(split.lines, { yPercent: 100 });
+      pending.set(heading, split);
+      observer.observe(heading);
+    });
+
+    // Se a largura mudar, as linhas cortadas ficam erradas: mostra o título inteiro
+    const initialWidth = window.innerWidth;
+    window.addEventListener('resize', () => {
+      if (window.innerWidth === initialWidth) return;
+      pending.forEach((split, heading) => {
+        observer.unobserve(heading);
+        split.revert();
+      });
+      pending.clear();
+    });
+  };
+
+  document.fonts.ready.then(() => {
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 1500 });
+    else setTimeout(start, 200);
+  });
+}
+
 function initOpenMontageMotion() {
   // 1. O Ticker do Hero é executado de forma autônoma e garantida
   initVerticalSpringTicker();
@@ -1423,6 +1480,7 @@ function initOpenMontageMotion() {
   }
 
   const gsap = window.gsap;
+  initSectionTitleReveal(gsap);
   if (window.ScrollTrigger) {
     gsap.registerPlugin(window.ScrollTrigger);
   }
@@ -1472,9 +1530,9 @@ function initVerticalTabs() {
     progresses.forEach((bar) => {
       if (window.gsap) {
         window.gsap.killTweensOf(bar);
-        window.gsap.set(bar, { height: '0%' });
+        window.gsap.set(bar, { scaleY: 0 });
       } else {
-        bar.style.height = '0%';
+        bar.style.transform = 'scaleY(0)';
       }
     });
     if (fallbackTimer) {
@@ -1493,9 +1551,9 @@ function initVerticalTabs() {
     if (window.gsap && currentBar && !reducedMotion) {
       progressTween = window.gsap.fromTo(
         currentBar,
-        { height: '0%' },
+        { scaleY: 0 },
         {
-          height: '100%',
+          scaleY: 1,
           duration: AUTO_PLAY_MS / 1000,
           ease: 'none',
           onComplete: () => {
@@ -1506,7 +1564,7 @@ function initVerticalTabs() {
         }
       );
     } else {
-      if (currentBar) currentBar.style.height = '100%';
+      if (currentBar) currentBar.style.transform = 'scaleY(1)';
       fallbackTimer = setTimeout(() => {
         if (!isPaused) {
           goToSlide((activeIndex + 1) % tabs.length, 1);

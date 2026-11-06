@@ -225,8 +225,9 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 0%;
+  height: 100%;
   background-color: var(--brand-red);
+  transform: scaleY(0);
   transform-origin: top;
 }
 
