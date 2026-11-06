@@ -66,6 +66,7 @@
     iframeLoaded = true;
     const src = iframe.getAttribute('data-src') || 'assets/prensa/prensa-site.html';
     iframe.src = src;
+    sheet.src = 'assets/prensa/folha-sacola.webp';
   }
 
   const observer = new IntersectionObserver(
@@ -158,7 +159,7 @@
   bench.setAttribute('aria-hidden', 'true');
   bench.innerHTML =
     '<video class="prensa-bench__clip" muted playsinline preload="none"></video>' +
-    '<img class="prensa-bench__sheet" alt="" src="assets/prensa/folha-sacola.webp" decoding="async">';
+    '<img class="prensa-bench__sheet" alt="" decoding="async">';
   if (mediaBox) mediaBox.appendChild(bench);
   const clip = bench.querySelector('.prensa-bench__clip');
   const sheet = bench.querySelector('.prensa-bench__sheet');
