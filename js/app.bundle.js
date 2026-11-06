@@ -597,6 +597,23 @@ function renderCategoryPills() {
   });
 }
 
+function initCatalogCardToggle() {
+  const grid = document.getElementById('catalog-grid');
+  if (!grid) return;
+  const mobile = window.matchMedia('(max-width: 640px)');
+
+  grid.addEventListener('click', (event) => {
+    if (!mobile.matches) return;
+    const hit = event.target.closest('.product-card__toggle, .product-card__heading');
+    if (!hit) return;
+    const card = hit.closest('.product-card');
+    const toggle = card.querySelector('.product-card__toggle');
+    const isOpen = card.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    toggle.setAttribute('aria-label', `${isOpen ? 'Ocultar' : 'Ver'} detalhes de ${card.querySelector('.product-card__title').textContent.trim()}`);
+  });
+}
+
 function buildProductCardHtml(product) {
   const isSelected = product.id === state.selectedProductId;
   return `
@@ -608,18 +625,24 @@ function buildProductCardHtml(product) {
           <span class="product-card__badge">${product.badge}</span>
         </div>
 
-        <div>
+        <div class="product-card__heading">
           <span class="product-card__category">${product.categoryLabel}</span>
           <h3 class="product-card__title">${product.name}</h3>
         </div>
 
-        <p class="product-card__specs">${product.specs}</p>
+        <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-${product.id}" aria-label="Ver detalhes de ${product.name}">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
 
-        <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
-          ${product.finishes
-            .slice(0, 3)
-            .map((fin) => `<span class="finish-chip">${fin}</span>`)
-            .join('')}
+        <div class="product-card__details" id="detalhes-${product.id}">
+          <p class="product-card__specs">${product.specs}</p>
+
+          <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+            ${product.finishes
+              .slice(0, 3)
+              .map((fin) => `<span class="finish-chip">${fin}</span>`)
+              .join('')}
+          </div>
         </div>
 
         <div class="product-card__footer">
@@ -1673,6 +1696,7 @@ function initHowTimeline() {
 function initApp() {
   initThemeSwitcher();
   initMobileMenu();
+  initCatalogCardToggle();
   initVerticalTabs();
   initMarqueeHoverSpeed();
   initHowTimeline();

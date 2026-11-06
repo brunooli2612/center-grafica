@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>document.documentElement.classList.add('js');</script>
     <meta name="robots" content="noindex, nofollow" />
     <title>Center Gráfica | Impressão Offset, Embalagens e Comunicação Visual - Enviamos para todo o Brasil</title>
     <meta
@@ -680,19 +681,24 @@
             <article class="product-card is-selected" data-product-card="sacola-personalizada">
               <div class="product-card__top">
                 <div class="product-card__icon">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 </div>
                 <span class="product-card__badge">Mais Pedido</span>
               </div>
-              <div>
+              <div class="product-card__heading">
                 <span class="product-card__category">Sacolas &amp; Embalagens</span>
                 <h3 class="product-card__title">Sacolas Personalizadas</h3>
               </div>
-              <p class="product-card__specs">Sacolas estruturadas em papel Offset, Duplex ou Kraft com reforço de fundo, ilhós metálico e alça de cordão ou gorgurão.</p>
-              <div class="product-card__finishes">
-                <span class="finish-chip">Laminação Fosca + Alça Cordão</span>
-                <span class="finish-chip">Laminação Brilho + Verniz UV Localizado</span>
-                <span class="finish-chip">Kraft Natural de Alta Resistência</span>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-sacola-personalizada" aria-label="Ver detalhes de Sacolas Personalizadas">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-sacola-personalizada">
+                <p class="product-card__specs">Sacolas estruturadas em papel Offset, Duplex ou Kraft com reforço de fundo, ilhós metálico e alça de cordão ou gorgurão.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Laminação Fosca + Alça Cordão</span>
+                  <span class="finish-chip">Laminação Brilho + Verniz UV Localizado</span>
+                  <span class="finish-chip">Kraft Natural de Alta Resistência</span>
+                </div>
               </div>
               <div class="product-card__footer">
                 <div class="product-card__min">
@@ -700,6 +706,223 @@
                   <strong>A partir de 250 un.</strong>
                 </div>
                 <button type="button" class="btn btn-primary" data-select-product="sacola-personalizada">Selecionado</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card="caixa-embalagem-personalizada">
+              <div class="product-card__top">
+                <div class="product-card__icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                </div>
+                <span class="product-card__badge">Sob Medida</span>
+              </div>
+              <div class="product-card__heading">
+                <span class="product-card__category">Sacolas &amp; Embalagens</span>
+                <h3 class="product-card__title">Caixas e Embalagens Sob Medida</h3>
+              </div>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-caixa-embalagem-personalizada" aria-label="Ver detalhes de Caixas e Embalagens Sob Medida">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-caixa-embalagem-personalizada">
+                <p class="product-card__specs">Embalagens em papel Cartão Triplex ou Duplex com faca de corte e vinco personalizada para lojas, cosméticos, alimentos e envios.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Laminação Fosca + Verniz Localizado UV</span>
+                  <span class="finish-chip">Plastificação Brilho Protetora</span>
+                  <span class="finish-chip">Cartão Triplex Impressão Direta</span>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__min">
+                  <span>Tiragem sugerida</span>
+                  <strong>A partir de 500 un.</strong>
+                </div>
+                <button type="button" class="btn btn-secondary" data-select-product="caixa-embalagem-personalizada">Orçar este item</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card="personalizacao-frotas">
+              <div class="product-card__top">
+                <div class="product-card__icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                </div>
+                <span class="product-card__badge">Alta Durabilidade</span>
+              </div>
+              <div class="product-card__heading">
+                <span class="product-card__category">Frotas &amp; Lonas</span>
+                <h3 class="product-card__title">Envelopamento e Adesivagem de Frotas</h3>
+              </div>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-personalizacao-frotas" aria-label="Ver detalhes de Envelopamento e Adesivagem de Frotas">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-personalizacao-frotas">
+                <p class="product-card__specs">Identidade visual para picapes, utilitários e carros comerciais em vinil automotivo resistente ao sol e chuva.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Envelopamento Parcial (Laterais + Traseira)</span>
+                  <span class="finish-chip">Vinil Automotivo + Laminação UV</span>
+                  <span class="finish-chip">Envelopamento Total + Perfurado no Vidro</span>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__min">
+                  <span>Tiragem sugerida</span>
+                  <strong>A partir de 1 un.</strong>
+                </div>
+                <button type="button" class="btn btn-secondary" data-select-product="personalizacao-frotas">Orçar este item</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card="lonas-banners-fachadas">
+              <div class="product-card__top">
+                <div class="product-card__icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                </div>
+                <span class="product-card__badge">Entrega Rápida</span>
+              </div>
+              <div class="product-card__heading">
+                <span class="product-card__category">Frotas &amp; Lonas</span>
+                <h3 class="product-card__title">Lonas, Banners e Adesivos de Vitrine</h3>
+              </div>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-lonas-banners-fachadas" aria-label="Ver detalhes de Lonas, Banners e Adesivos de Vitrine">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-lonas-banners-fachadas">
+                <p class="product-card__specs">Lonas 440g com ilhós ou bastão, banners promocionais e adesivos para vitrines, fachadas e sinalização interna.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Lona 440g com Ilhós Metálico</span>
+                  <span class="finish-chip">Banner Completo com Bastão e Corda</span>
+                  <span class="finish-chip">Adesivo Vinil com Recorte Eletrônico</span>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__min">
+                  <span>Tiragem sugerida</span>
+                  <strong>A partir de 1 un.</strong>
+                </div>
+                <button type="button" class="btn btn-secondary" data-select-product="lonas-banners-fachadas">Orçar este item</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card="cadernos-agendas-corporativas">
+              <div class="product-card__top">
+                <div class="product-card__icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                </div>
+                <span class="product-card__badge">Brinde Premium</span>
+              </div>
+              <div class="product-card__heading">
+                <span class="product-card__category">Agendas &amp; Papelaria</span>
+                <h3 class="product-card__title">Cadernos e Agendas Personalizadas</h3>
+              </div>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-cadernos-agendas-corporativas" aria-label="Ver detalhes de Cadernos e Agendas Personalizadas">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-cadernos-agendas-corporativas">
+                <p class="product-card__specs">Cadernos e agendas capa dura com a marca da sua empresa, encadernação Wire-o metálico, cartela de adesivos e bolso interno.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Laminação Fosca + Verniz UV na Logo</span>
+                  <span class="finish-chip">Laminação Brilho + Elástico</span>
+                  <span class="finish-chip">Acabamento Soft Touch + Hot Stamping</span>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__min">
+                  <span>Tiragem sugerida</span>
+                  <strong>A partir de 50 un.</strong>
+                </div>
+                <button type="button" class="btn btn-secondary" data-select-product="cadernos-agendas-corporativas">Orçar este item</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card="pastas-blocos-papelaria">
+              <div class="product-card__top">
+                <div class="product-card__icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                </div>
+                <span class="product-card__badge">Papelaria B2B</span>
+              </div>
+              <div class="product-card__heading">
+                <span class="product-card__category">Agendas &amp; Papelaria</span>
+                <h3 class="product-card__title">Pastas com Bolsa, Blocos e Receituários</h3>
+              </div>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-pastas-blocos-papelaria" aria-label="Ver detalhes de Pastas com Bolsa, Blocos e Receituários">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-pastas-blocos-papelaria">
+                <p class="product-card__specs">Papelaria completa para clínicas, escritórios e empresas: pastas com bolsa interna, blocos de anotação, envelopes e receituários.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Pasta com Bolsa Colada + Laminação Fosca</span>
+                  <span class="finish-chip">Pasta com Orelha + Verniz UV Total</span>
+                  <span class="finish-chip">Blocos de Anotação 50 Folhas</span>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__min">
+                  <span>Tiragem sugerida</span>
+                  <strong>A partir de 100 un.</strong>
+                </div>
+                <button type="button" class="btn btn-secondary" data-select-product="pastas-blocos-papelaria">Orçar este item</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card="cartao-visita-tags-rotulos">
+              <div class="product-card__top">
+                <div class="product-card__icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                </div>
+                <span class="product-card__badge">Alto Giro</span>
+              </div>
+              <div class="product-card__heading">
+                <span class="product-card__category">Cartões, Rótulos &amp; Panfletos</span>
+                <h3 class="product-card__title">Cartões de Visita, Tags e Rótulos Adesivos</h3>
+              </div>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-cartao-visita-tags-rotulos" aria-label="Ver detalhes de Cartões de Visita, Tags e Rótulos Adesivos">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-cartao-visita-tags-rotulos">
+                <p class="product-card__specs">Cartões de visita e tags de roupas em Couché 300g, além de rótulos e etiquetas em BOPP resistentes à água e geladeira.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Couché 300g + Laminação Fosca + Verniz Localizado</span>
+                  <span class="finish-chip">Couché 250g + Verniz Total Brilho</span>
+                  <span class="finish-chip">Tag de Confecção com Furo + Corte Especial</span>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__min">
+                  <span>Tiragem sugerida</span>
+                  <strong>A partir de 250 un.</strong>
+                </div>
+                <button type="button" class="btn btn-secondary" data-select-product="cartao-visita-tags-rotulos">Orçar este item</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-product-card="panfleto-couché-catalogos">
+              <div class="product-card__top">
+                <div class="product-card__icon">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+                </div>
+                <span class="product-card__badge">Melhor Custo/Milheiro</span>
+              </div>
+              <div class="product-card__heading">
+                <span class="product-card__category">Cartões, Rótulos &amp; Panfletos</span>
+                <h3 class="product-card__title">Panfletos, Folders, Catálogos e Revistas</h3>
+              </div>
+              <button type="button" class="product-card__toggle" aria-expanded="false" aria-controls="detalhes-panfleto-couché-catalogos" aria-label="Ver detalhes de Panfletos, Folders, Catálogos e Revistas">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div class="product-card__details" id="detalhes-panfleto-couché-catalogos">
+                <p class="product-card__specs">Panfletos promocionais, folders com dobras e catálogos de produtos com cores vivas e excelente custo por milheiro.</p>
+                <div class="product-card__finishes" aria-label="Acabamentos mais pedidos">
+                  <span class="finish-chip">Panfleto Couché Brilho 115g (Frente e Verso)</span>
+                  <span class="finish-chip">Folder em Couché 150g com Dobras</span>
+                  <span class="finish-chip">Catálogo com Grampo Canoa</span>
+                </div>
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__min">
+                  <span>Tiragem sugerida</span>
+                  <strong>A partir de 1000 un.</strong>
+                </div>
+                <button type="button" class="btn btn-secondary" data-select-product="panfleto-couché-catalogos">Orçar este item</button>
               </div>
             </article>
           </div>

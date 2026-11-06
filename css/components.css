@@ -644,6 +644,100 @@
   font-size: 0.88rem;
 }
 
+.product-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.product-card__toggle {
+  display: none;
+}
+
+/* Catálogo compacto no celular: título, tiragem e botão à vista; detalhes abrem na seta */
+@media (max-width: 640px) {
+  .product-card {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--space-3);
+    row-gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .product-card__top {
+    display: contents;
+  }
+
+  .product-card__badge {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  html.js .product-card:not(.is-open) .product-card__badge {
+    display: none;
+  }
+
+  .product-card__heading {
+    grid-column: 2;
+    grid-row: 1;
+    cursor: pointer;
+  }
+
+  .product-card__title {
+    font-size: 1.04rem;
+  }
+
+  .product-card__toggle {
+    grid-column: 3;
+    grid-row: 1;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--ink-secondary);
+    cursor: pointer;
+  }
+
+  html.js .product-card__toggle {
+    display: inline-flex;
+  }
+
+  .product-card__toggle svg {
+    transition: transform 180ms var(--ease-out-quart);
+  }
+
+  .product-card.is-open .product-card__toggle svg {
+    transform: rotate(180deg);
+  }
+
+  .product-card__details {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  html.js .product-card:not(.is-open) .product-card__details {
+    display: none;
+  }
+
+  .product-card__footer {
+    grid-column: 1 / -1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-card__toggle svg {
+      transition: none;
+    }
+  }
+}
+
 /* Formulário de Orçamento e Preview do WhatsApp (separados por tom sobre --bg-canvas) */
 .quote-card {
   background-color: var(--bg-surface);
