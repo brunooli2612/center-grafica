@@ -349,12 +349,22 @@
   // 7. GSAP ScrollTrigger Integration (if loaded)
   function initScrollTrigger() {
     if (window.ScrollTrigger && window.gsap) {
-      window.ScrollTrigger.create({
+      const trigger = window.ScrollTrigger.create({
         trigger: section,
         start: 'top top',
         end: 'bottom bottom',
         onUpdate: (self) => setTargetP(self.progress),
       });
+
+      // A posição da seção muda com o filtro do catálogo e ao recarregar no meio da página.
+      const realign = () => {
+        const top = section.getBoundingClientRect().top + window.scrollY;
+        if (Math.abs(top - trigger.start) > 1) trigger.refresh();
+      };
+      new ResizeObserver(realign).observe(document.body);
+      window.addEventListener('load', realign);
+      window.addEventListener('scroll', realign, { once: true, passive: true });
+      window.ScrollTrigger.addEventListener('scrollEnd', realign);
     }
   }
 

@@ -462,13 +462,13 @@
                 <p class="vtabs-kicker">Serviços e portfólio real da @centergrafica</p>
               </div>
 
-              <div class="vtabs-list" role="tablist" aria-label="Especialidades e Trabalhos Reais da Center Gráfica">
+              <div class="vtabs-list" role="group" aria-label="Especialidades e Trabalhos Reais da Center Gráfica">
                 <div class="vtabs-item is-active" data-vtab-index="0">
                   <div class="vtabs-rail" aria-hidden="true">
                     <div class="vtabs-progress" data-vtab-progress="0"></div>
                   </div>
                   <div class="vtabs-body">
-                    <button type="button" class="vtabs-title" role="tab" aria-selected="true">Sacolas &amp; Embalagens Offset</button>
+                    <button type="button" class="vtabs-title" aria-expanded="true">Sacolas &amp; Embalagens Offset</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
@@ -487,7 +487,7 @@
                     <div class="vtabs-progress" data-vtab-progress="1"></div>
                   </div>
                   <div class="vtabs-body">
-                    <button type="button" class="vtabs-title" role="tab" aria-selected="false">Adesivagem de Frotas &amp; Lonas</button>
+                    <button type="button" class="vtabs-title" aria-expanded="false">Adesivagem de Frotas &amp; Lonas</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
@@ -506,7 +506,7 @@
                     <div class="vtabs-progress" data-vtab-progress="2"></div>
                   </div>
                   <div class="vtabs-body">
-                    <button type="button" class="vtabs-title" role="tab" aria-selected="false">Cadernos &amp; Agendas Corporativas</button>
+                    <button type="button" class="vtabs-title" aria-expanded="false">Cadernos &amp; Agendas Corporativas</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
@@ -525,7 +525,7 @@
                     <div class="vtabs-progress" data-vtab-progress="3"></div>
                   </div>
                   <div class="vtabs-body">
-                    <button type="button" class="vtabs-title" role="tab" aria-selected="false">Acabamentos Especiais &amp; Verniz UV</button>
+                    <button type="button" class="vtabs-title" aria-expanded="false">Acabamentos Especiais &amp; Verniz UV</button>
                     <div class="vtabs-expand">
                       <div class="vtabs-expand-inner">
                         <p class="vtabs-desc">
@@ -1087,8 +1087,14 @@ Aguardo o retorno com valores e prazo de produção. Obrigado!</pre>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     <script src="js/app.bundle.js" defer></script>
     <script type="module" src="js/logo-3d.js"></script>
-    <script src="js/revisao.js" defer></script>
     <script src="js/prensa-embed.js" defer></script>
     <script src="js/nav-menu.js" defer></script>
+    <script>
+      if (new URLSearchParams(location.search).has('revisao')) {
+        const revisao = document.createElement('script');
+        revisao.src = 'js/revisao.js';
+        document.body.append(revisao);
+      }
+    </script>
   </body>
 </html>

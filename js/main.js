@@ -108,30 +108,12 @@ function initMobileMenu() {
       navMenu.classList.remove('is-open');
     });
   });
-}
 
-function initTiltCards() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const cards = document.querySelectorAll('[data-tilt-card]');
-  cards.forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const pctX = (x / rect.width) * 100;
-      const pctY = (y / rect.height) * 100;
-      const rotateY = ((x / rect.width) - 0.5) * 6;
-      const rotateX = (0.5 - (y / rect.height)) * 6;
-
-      card.style.setProperty('--sheen-x', `${pctX.toFixed(1)}%`);
-      card.style.setProperty('--sheen-y', `${pctY.toFixed(1)}%`);
-      card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener('pointerleave', () => {
-      card.style.transform = '';
-    });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || toggleBtn.getAttribute('aria-expanded') !== 'true') return;
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('is-open');
+    toggleBtn.focus();
   });
 }
 
@@ -1083,8 +1065,8 @@ function initVerticalTabs() {
     tabs.forEach((tab, idx) => {
       const isSelected = idx === activeIndex;
       tab.classList.toggle('is-active', isSelected);
-      const tabButton = tab.querySelector('[role=\"tab\"]');
-      if (tabButton) tabButton.setAttribute('aria-selected', String(isSelected));
+      const tabButton = tab.querySelector('.vtabs-title');
+      if (tabButton) tabButton.setAttribute('aria-expanded', String(isSelected));
     });
 
     const prevSlide = slides[prevIndex];

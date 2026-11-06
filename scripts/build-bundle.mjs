@@ -29,9 +29,6 @@ const catalogCode = stripModuleSyntax(
 const engineCode = stripModuleSyntax(
   fs.readFileSync(path.join(rootDir, 'js/quote-engine.js'), 'utf8')
 );
-const themeCode = stripModuleSyntax(
-  fs.readFileSync(path.join(rootDir, 'js/theme-manager.js'), 'utf8')
-);
 const mainCode = stripModuleSyntax(
   fs.readFileSync(path.join(rootDir, 'js/main.js'), 'utf8')
 );
@@ -46,8 +43,6 @@ const bundleContent = `/**
 ${catalogCode}
 
 ${engineCode}
-
-${themeCode}
 
 ${mainCode}
 })();

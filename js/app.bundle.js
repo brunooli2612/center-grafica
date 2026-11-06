@@ -5,13 +5,20 @@
 (function () {
   'use strict';
 
-const PRIMARY_WHATSAPP_NUMBER = '5586988545141';const PRIMARY_WHATSAPP_DISPLAY = '(86) 98854-5141';const SECONDARY_WHATSAPP_DISPLAY = '(86) 99510-5888';const LANDLINE_DISPLAY = '(86) 3229-5141';const COMPANY_ADDRESS = 'Av. Walter Alencar, 1700 - Macaúba, Teresina - PI';const INSTAGRAM_URL = 'https://instagram.com/centergrafica/';const PRODUCT_CATEGORIES = [
+const PRIMARY_WHATSAPP_NUMBER = '5586988545141';
+const PRIMARY_WHATSAPP_DISPLAY = '(86) 98854-5141';
+const SECONDARY_WHATSAPP_DISPLAY = '(86) 99510-5888';
+const LANDLINE_DISPLAY = '(86) 3229-5141';
+const COMPANY_ADDRESS = 'Av. Walter Alencar, 1700 - Macaúba, Teresina - PI';
+const INSTAGRAM_URL = 'https://instagram.com/centergrafica/';
+const PRODUCT_CATEGORIES = [
   { id: 'todos', label: 'Todos (8)' },
   { id: 'embalagens', label: 'Sacolas & Embalagens' },
   { id: 'comunicacao-visual', label: 'Frotas & Lonas' },
   { id: 'brindes-corporativos', label: 'Agendas & Papelaria' },
   { id: 'offset-digital', label: 'Cartões, Rótulos & Panfletos' }
-];const CATALOG_PRODUCTS = [
+];
+const CATALOG_PRODUCTS = [
   {
     id: 'sacola-personalizada',
     specCode: 'IMP-01',
@@ -180,7 +187,8 @@ const PRIMARY_WHATSAPP_NUMBER = '5586988545141';const PRIMARY_WHATSAPP_DISPLAY 
     leadTime: 'Produção Offset rápida',
     icon: 'layers'
   }
-];const PORTFOLIO_ITEMS = [
+];
+const PORTFOLIO_ITEMS = [
   {
     id: 'case-sacolas-telego',
     title: 'Sacolas Personalizadas em Offset',
@@ -221,7 +229,8 @@ const PRIMARY_WHATSAPP_NUMBER = '5586988545141';const PRIMARY_WHATSAPP_DISPLAY 
     description: 'Acabamento sofisticado em tom carmim com grafismo e marca em destaque.',
     productRef: 'cadernos-agendas-corporativas'
   }
-];const PREPRESS_CHECKLIST_ITEMS = [
+];
+const PREPRESS_CHECKLIST_ITEMS = [
   {
     id: 'cmyk',
     label: 'Cores em padrão CMYK',
@@ -436,78 +445,6 @@ const DELIVERY_LABELS = {
 }
 
 
-/**
- * ThemeManager — Light / Dark / System Theme Toggle (agency-ux-architect)
- * Safe against restricted localStorage contexts.
- */class ThemeManager {
-  constructor() {
-    this.currentTheme = this.getStoredTheme() || 'system';
-    this.applyTheme(this.currentTheme);
-    this.initializeToggle();
-  }
-
-  getStoredTheme() {
-    try {
-      const stored = window.localStorage.getItem('center_grafica_theme');
-      return stored === 'dark' || stored === 'light' || stored === 'system' ? stored : null;
-    } catch {
-      return null;
-    }
-  }
-
-  applyTheme(theme) {
-    const validTheme = ['light', 'dark', 'system'].includes(theme) ? theme : 'system';
-    if (typeof document !== 'undefined') {
-      if (validTheme === 'system') {
-        document.documentElement.removeAttribute('data-theme');
-      } else {
-        document.documentElement.setAttribute('data-theme', validTheme);
-      }
-    }
-
-    try {
-      if (validTheme === 'system') {
-        window.localStorage.removeItem('center_grafica_theme');
-      } else {
-        window.localStorage.setItem('center_grafica_theme', validTheme);
-      }
-    } catch {
-      // Ignore storage errors in sandboxed/private contexts
-    }
-
-    this.currentTheme = validTheme;
-    this.updateToggleUI();
-  }
-
-  initializeToggle() {
-    if (typeof document === 'undefined') return;
-    const toggle = document.querySelector('.theme-toggle');
-    if (!toggle) return;
-
-    toggle.addEventListener('click', (event) => {
-      const button =
-        event.target instanceof Element ? event.target.closest('.theme-toggle-option') : null;
-      if (button && toggle.contains(button)) {
-        const selected = button.getAttribute('data-theme');
-        if (selected) {
-          this.applyTheme(selected);
-        }
-      }
-    });
-  }
-
-  updateToggleUI() {
-    if (typeof document === 'undefined') return;
-    const options = document.querySelectorAll('.theme-toggle-option');
-    options.forEach((option) => {
-      const isSelected = option.getAttribute('data-theme') === this.currentTheme;
-      option.classList.toggle('active', isSelected);
-      option.setAttribute('aria-checked', isSelected ? 'true' : 'false');
-    });
-  }
-}
-
-
 
 
 const THEME_STORAGE_KEY = 'center_grafica_theme_pref';
@@ -606,30 +543,12 @@ function initMobileMenu() {
       navMenu.classList.remove('is-open');
     });
   });
-}
 
-function initTiltCards() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const cards = document.querySelectorAll('[data-tilt-card]');
-  cards.forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      const pctX = (x / rect.width) * 100;
-      const pctY = (y / rect.height) * 100;
-      const rotateY = ((x / rect.width) - 0.5) * 6;
-      const rotateX = (0.5 - (y / rect.height)) * 6;
-
-      card.style.setProperty('--sheen-x', `${pctX.toFixed(1)}%`);
-      card.style.setProperty('--sheen-y', `${pctY.toFixed(1)}%`);
-      card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener('pointerleave', () => {
-      card.style.transform = '';
-    });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || toggleBtn.getAttribute('aria-expanded') !== 'true') return;
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('is-open');
+    toggleBtn.focus();
   });
 }
 
@@ -1581,8 +1500,8 @@ function initVerticalTabs() {
     tabs.forEach((tab, idx) => {
       const isSelected = idx === activeIndex;
       tab.classList.toggle('is-active', isSelected);
-      const tabButton = tab.querySelector('[role=\"tab\"]');
-      if (tabButton) tabButton.setAttribute('aria-selected', String(isSelected));
+      const tabButton = tab.querySelector('.vtabs-title');
+      if (tabButton) tabButton.setAttribute('aria-expanded', String(isSelected));
     });
 
     const prevSlide = slides[prevIndex];
