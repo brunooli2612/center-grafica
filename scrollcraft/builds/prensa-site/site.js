@@ -79,21 +79,28 @@ export async function runSite() {
   const stage = createPressStage({canvas, look: {press: {art}}});
 
   // Quality TIERS
-  const TIERS = [
-    // a lower tier sheds effects first and keeps the canvas at (near) native resolution: dropping the pixel
-    // ratio below 1 is what made the press look blurred
-    { samples: 4, ao: true, shadow: 2048, pr: 1.5 },
-    { samples: 4, ao: false, shadow: 1024, pr: 1.25 },
-    { samples: 2, ao: false, shadow: 1024, pr: 1.0 },
-  ];
   const isLight = window.matchMedia('(pointer: coarse)').matches || Math.min(window.innerWidth, window.innerHeight) < 700;
-  let tier = isLight ? 2 : 0;
+  // a lower tier sheds effects first and keeps the canvas at (near) native resolution: dropping the pixel
+  // ratio below 1 is what made the press look blurred
+  // phones have 2x-3x screens: 1.0 drew a ninth of the pixels and looked soft, so they start sharp, without the
+  // costly effects, and watchPerf steps down only on a device that actually struggles
+  const TIERS = isLight
+    ? [
+        { samples: 2, ao: false, shadow: 1024, pr: 2.0 },
+        { samples: 2, ao: false, shadow: 1024, pr: 1.5 },
+        { samples: 2, ao: false, shadow: 1024, pr: 1.0 },
+      ]
+    : [
+        { samples: 4, ao: true, shadow: 2048, pr: 1.5 },
+        { samples: 4, ao: false, shadow: 1024, pr: 1.25 },
+        { samples: 2, ao: false, shadow: 1024, pr: 1.0 },
+      ];
+  let tier = 0;
 
   const fit = () => {
     const w = window.innerWidth;
     const h = window.innerHeight;
-    const maxPr = isLight ? 1.5 : 2.0;
-    const pr = Math.max(1, Math.min(window.devicePixelRatio || 1, TIERS[tier].pr, maxPr));
+    const pr = Math.max(1, Math.min(window.devicePixelRatio || 1, TIERS[tier].pr));
     stage.resize(w, h, pr);
   };
 

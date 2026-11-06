@@ -67,3 +67,12 @@ test('Prensa offset "Como fazemos" section exists between #como-funciona and #or
   assert.match(html, /<link\s+rel="stylesheet"\s+href="css\/prensa\.css"\s*\/?>/);
   assert.match(html, /<script\s+src="js\/prensa-embed\.js"\s+defer><\/script>/);
 });
+
+test('prensa no celular comeca nitida e so reduz se o aparelho engasgar', () => {
+  const source = fs.readFileSync(path.join(rootDir, 'scrollcraft/builds/prensa-site/site.js'), 'utf8');
+  assert.match(source, /isLight\s*\?\s*\[\s*\{ samples: 2, ao: false, shadow: 1024, pr: 2\.0 \}/);
+  assert.match(source, /let tier = 0;/);
+  assert.doesNotMatch(source, /let tier = isLight/);
+  assert.doesNotMatch(source, /maxPr/);
+  assert.match(fs.readFileSync(path.join(rootDir, 'assets/prensa/prensa-site.html'), 'utf8'), /pr:2,?\}|pr:2\}/);
+});
