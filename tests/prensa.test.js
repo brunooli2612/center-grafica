@@ -65,5 +65,5 @@ test('Prensa offset "Como fazemos" section exists between #como-funciona and #or
 
   // 6. External stylesheet and script references exist
   assert.match(html, /<link\s+rel="stylesheet"\s+href="css\/prensa\.css"\s*\/?>/);
-  assert.match(html, /'js\/prensa-embed\.js'/);
+  assert.match(html, /<script\s+src="js\/prensa-embed\.js"\s+defer><\/script>/);
 });

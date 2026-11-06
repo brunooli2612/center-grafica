@@ -3,22 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      document.documentElement.classList.add('js');
-      // Tema antes da primeira pintura: os scripts agora rodam depois dela
-      try {
-        const tema = localStorage.getItem('center_grafica_theme_pref');
-        if (tema === 'dark' || (tema === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      } catch {}
-    </script>
-    <link rel="preload" href="js/vendor/gsap.min.js" as="script" />
-    <link rel="preload" href="js/vendor/ScrollTrigger.min.js" as="script" />
-    <link rel="preload" href="js/vendor/SplitText.min.js" as="script" />
-    <link rel="preload" href="js/app.bundle.js" as="script" />
-    <link rel="preload" href="js/prensa-embed.js" as="script" />
-    <link rel="preload" href="js/nav-menu.js" as="script" />
+    <script>document.documentElement.classList.add('js');</script>
     <meta name="robots" content="noindex, nofollow" />
     <title>Center Gráfica | Impressão Offset, Embalagens e Comunicação Visual - Enviamos para todo o Brasil</title>
     <meta
@@ -1308,26 +1293,13 @@ Aguardo o retorno com valores e prazo de produção. Obrigado!</pre>
     </footer>
 
     <!-- GSAP + ScrollTrigger (Motor de Animação OpenMontage / HyperFrames) -->
+    <script src="js/vendor/gsap.min.js" defer></script>
+    <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+    <script src="js/vendor/SplitText.min.js" defer></script>
+    <script src="js/app.bundle.js" defer></script>
     <script type="module" src="js/logo-3d.js"></script>
-    <script>
-      // Tela primeiro: o ScrollTrigger recalcula a página inteira ao rodar, e isso não pode segurar a primeira pintura
-      (() => {
-        const arquivos = ['js/vendor/gsap.min.js', 'js/vendor/ScrollTrigger.min.js', 'js/vendor/SplitText.min.js', 'js/app.bundle.js', 'js/prensa-embed.js', 'js/nav-menu.js'];
-        let iniciou = false;
-        const iniciar = () => {
-          if (iniciou) return;
-          iniciou = true;
-          arquivos.forEach((src) => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.async = false;
-            document.body.append(script);
-          });
-        };
-        requestAnimationFrame(() => setTimeout(iniciar, 0));
-        setTimeout(iniciar, 1500); // aba em segundo plano não dispara requestAnimationFrame
-      })();
-    </script>
+    <script src="js/prensa-embed.js" defer></script>
+    <script src="js/nav-menu.js" defer></script>
     <script>
       if (new URLSearchParams(location.search).has('revisao')) {
         const revisao = document.createElement('script');

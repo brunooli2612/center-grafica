@@ -29,26 +29,12 @@ test('fontes vem do proprio site, com prioridade nas duas da capa', () => {
 test('GSAP vem do proprio site, na mesma versao', () => {
   const html = read('index.html');
   assert.doesNotMatch(html, /cdnjs\.cloudflare\.com/);
-  assert.match(html, /'js\/vendor\/gsap\.min\.js'/);
-  assert.match(html, /'js\/vendor\/ScrollTrigger\.min\.js'/);
+  assert.match(html, /<script src="js\/vendor\/gsap\.min\.js" defer><\/script>/);
+  assert.match(html, /<script src="js\/vendor\/ScrollTrigger\.min\.js" defer><\/script>/);
   assert.match(read('js/vendor/gsap.min.js'), /GSAP \d+\.\d+\.\d+/);
 });
 
 test('fontes e GSAP entram no cache de assets ou seguem revalidando', () => {
   const rule = JSON.parse(read('vercel.json')).headers[0];
   assert.match(rule.source, /woff2/);
-});
-
-test('scripts rodam depois da primeira pintura, na ordem, com tema ja aplicado', () => {
-  const html = read('index.html');
-  assert.doesNotMatch(html, /<script src="js\/(?:vendor\/|app\.bundle|prensa-embed|nav-menu)[^"]*"/);
-  assert.match(html, /requestAnimationFrame\(\(\) => setTimeout\(iniciar, 0\)\)/);
-  assert.match(html, /script\.async = false/);
-  assert.match(html, /setTimeout\(iniciar, 1500\)/);
-  assert.ok(html.indexOf("setAttribute('data-theme', 'dark')") < html.indexOf('</head>'));
-  for (const file of ['gsap.min.js', 'ScrollTrigger.min.js', 'SplitText.min.js']) {
-    assert.match(html, new RegExp(`rel="preload" href="js/vendor/${file.replace(/\./g, '\.')}" as="script"`));
-  }
-  const tema = html.match(/localStorage\.getItem\('([^']+)'\)/)[1];
-  assert.match(read('js/main.js'), new RegExp(`THEME_STORAGE_KEY = '${tema}'`));
 });
