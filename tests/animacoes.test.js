@@ -10,7 +10,7 @@ const read = (rel) => fs.readFileSync(path.join(rootDir, rel), 'utf8');
 
 test('SplitText vem do proprio site, na versao do GSAP', () => {
   const html = read('index.html');
-  assert.match(html, /<script src="js\/vendor\/SplitText\.min\.js" defer><\/script>\s*<script src="js\/app\.bundle\.js" defer>/);
+  assert.match(html, /'js\/vendor\/SplitText\.min\.js',\s*'js\/app\.bundle\.js'/);
   assert.match(read('js/vendor/gsap.min.js'), /GSAP 3\.13\.0/);
   assert.match(read('js/vendor/ScrollTrigger.min.js'), /3\.13\.0/);
   assert.match(read('js/vendor/SplitText.min.js'), /3\.13\.0/);
