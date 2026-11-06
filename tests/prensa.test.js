@@ -40,7 +40,7 @@ test('Prensa offset "Como fazemos" section exists between #como-funciona and #or
   assert.match(iframeAttrs, /tabindex="-1"/, 'iframe must have tabindex="-1"');
 
   // 4. Section Title and Lead
-  assert.match(html, /Como a sua arte vira papel/);
+  assert.match(html, /A sua ideia no papel!/);
   assert.match(
     html,
     /Na offset, a imagem passa por três cilindros antes de chegar na folha\. Role para ver por dentro\./
