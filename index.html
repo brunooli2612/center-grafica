@@ -22,13 +22,9 @@
     />
     <meta property="og:image" content="assets/images/portfolio-sacolas.png" />
 
-    <!-- Google Fonts: Bricolage Grotesque, Plus Jakarta Sans & JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fontes da capa com prioridade: evita refazer o layout quando chegam tarde -->
+    <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/svg+xml" href="assets/images/simbolo-center.svg" />
 
@@ -1306,8 +1302,8 @@ Aguardo o retorno com valores e prazo de produção. Obrigado!</pre>
     </footer>
 
     <!-- GSAP + ScrollTrigger (Motor de Animação OpenMontage / HyperFrames) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="js/vendor/gsap.min.js" defer></script>
+    <script src="js/vendor/ScrollTrigger.min.js" defer></script>
     <script src="js/app.bundle.js" defer></script>
     <script type="module" src="js/logo-3d.js"></script>
     <script src="js/prensa-embed.js" defer></script>

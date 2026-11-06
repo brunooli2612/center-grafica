@@ -40,14 +40,12 @@
     animation-delay: var(--line-delay);
   }
 
-  /* Depois do título: subtítulo, botões e selos assentam em sequência */
-  .hero-lead,
+  /* Depois do título: botões e selos assentam em sequência. O subtítulo já nasce visível. */
   .hero-cta-group,
   .hero-trust-pills {
     animation: heroSettle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  .hero-lead { animation-delay: 0.62s; }
   .hero-cta-group { animation-delay: 0.74s; }
   .hero-trust-pills { animation-delay: 0.86s; }
 }
