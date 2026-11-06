@@ -162,6 +162,36 @@ html[data-theme="dark"] .site-header__inner {
   text-decoration: none;
 }
 
+/* Logo completa (assets/images/logo-center-grafica-fundo-*.svg): uma versão por tema */
+.brand-logo__full {
+  display: block;
+  height: 2.8rem;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.brand-logo__full--escuro,
+html[data-theme="dark"] .brand-logo__full--claro {
+  display: none;
+}
+
+html[data-theme="dark"] .brand-logo__full--escuro {
+  display: block;
+}
+
+.brand-logo__full + .brand-logo__full + .brand-logo__tagline,
+.brand-logo__full + .brand-logo__tagline {
+  padding-left: var(--space-3);
+  border-left: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+  line-height: 1.3;
+}
+
+@media (max-width: 640px) {
+  .brand-logo__full {
+    height: 2.3rem;
+  }
+}
+
 /* Símbolo da marca (assets/images/simbolo-center.svg): já tem forma própria, sem moldura */
 .brand-logo__mark {
   width: 2.75rem;
