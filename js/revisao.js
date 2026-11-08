@@ -3,7 +3,7 @@
  * O cliente cita o número (ex.: "2.3") ao pedir alterações. Sem ?revisao, nada acontece.
  */
 (() => {
-  const WHATS = '5586988242452';
+  const WHATS = '5586988167128';
   if (!new URLSearchParams(location.search).has('revisao')) return;
 
   const BLOCKS = 'header.site-header, main > section, footer.site-footer';
